@@ -23,8 +23,9 @@ export default function LoginPage() {
       },
       data: JSON.stringify(data)
     })
-    .then(res => console.log(res))
+    .then(res => console.log(res)) //===> [remove this line]
     .catch(err => console.log(err));
+    // [show the error in toast]
 
     if (res.ok) {
       navigate("/dashboard", {
