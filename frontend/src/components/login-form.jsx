@@ -20,8 +20,8 @@ export function LoginForm({
       </div>
       <div className="grid gap-6">
         <div className="grid gap-3">
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" name="email" placeholder="m@example.com" required />
+          <Label htmlFor="username">Username</Label>
+          <Input id="username" type="text" name="userName" placeholder="John Doe" required />
         </div>
         <div className="grid gap-3">
           <div className="flex items-center">
@@ -30,7 +30,7 @@ export function LoginForm({
               Forgot your password?
             </a>
           </div>
-          <Input id="password" type="password" name="password" required />
+          <Input id="password" type="password" name="password" placeholder="Enter your password" required />
         </div>
         <Button type="submit" className="w-full">
           Login

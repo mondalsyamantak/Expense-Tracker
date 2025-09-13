@@ -13,12 +13,28 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useEffect } from "react"
+import { useLocation } from "react-router"
+import { toast, Toaster } from "sonner"
 
 export default function Page() {
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.message) {
+      // Display the message as a toast notification
+      console.log(location.state.message);
+      toast.success(location.state.message);
+      // Clear the state to prevent duplicate toasts on re-render
+      location.state.message = null;
+    }
+  }, [])
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
+        <Toaster richColors />
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />

@@ -2,17 +2,38 @@ import { Bitcoin, GalleryVerticalEnd } from "lucide-react"
 
 import { LoginForm } from "@/components/login-form"
 import { Toaster, toast } from 'sonner'
+import axios from "axios";
+import { useNavigate } from 'react-router';
 
 export default function LoginPage() {
 
-  const handleSubmit = (e) => {
+  const url = import.meta.env.VITE_BACKEND || "http://localhost:3000"
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
     console.log(data);
-    toast.success("Data registered in console");
+    // toast.success("Data registered in console");
 
-    // Handle form submission logic here
+    const req = await axios.fetch(`${url}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify(data)
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+
+    if (res.ok) {
+      navigate("/dashboard", {
+        state: {
+          message: "Login successful",
+        }
+      })
+    }
+
   }
 
 
@@ -24,7 +45,7 @@ export default function LoginPage() {
           <a href="#" className="flex items-center gap-2 font-medium">
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
               {/* <GalleryVerticalEnd className="size-4" /> */}
-              <Bitcoin className="size-4" />
+              <Bitcoin className="size-4"/>
             </div>
             Expense Tracker
           </a>
