@@ -2,15 +2,37 @@ import { Bitcoin, GalleryVerticalEnd } from "lucide-react"
 
 import { Toaster, toast } from 'sonner'
 import { SignUpForm } from "../../components/signup-form";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 export default function SignUpPage() {
 
+  const url = import.meta.env.VITE_BACKEND || "http://localhost:3000";
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
     console.log(data);
-    toast.success("Data registered in console");
+    
+    const req = axios.fetch(`${url}/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify(data)
+    })
+    .then(res => console.log(res)) //====> [remove this line]
+    .catch(err => console.log(err));
+    //[show the error in a sonner/toast message]
+
+    if (res.ok) {
+      navigate("/login", {
+        state: {
+          message: "Signup successful please login",
+        }
+      })
+    }
 
     
   }

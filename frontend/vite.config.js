@@ -11,12 +11,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server: {
-    proxy: {
-      "/login": {
-        target: "http://localhost:8080", // backend
-        changeOrigin: true,
-      },
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     "/login": {
+  //       target: "http://localhost:8080", // backend
+  //       changeOrigin: true,
+  //     },
+  //   },
+  // },
 })
