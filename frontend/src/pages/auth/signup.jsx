@@ -15,23 +15,24 @@ export default function SignUpPage() {
     const data = Object.fromEntries(formData.entries());
     console.log(data);
     
-    const req = axios.fetch(`${url}/signup`, {
+    const res = axios(`${url}/SignUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      data: JSON.stringify(data)
+      data: data
     })
     .then(res => console.log(res)) //====> [remove this line]
     .catch(err => console.log(err));
     //[show the error in a sonner/toast message]
 
     if (res.ok) {
-      navigate("/login", {
-        state: {
-          message: "Signup successful please login",
-        }
-      })
+      // navigate("/login", {
+      //   state: {
+      //     message: "Signup successful please login",
+      //   }
+      // })
+      toast.success("signed up successfully")
     }
 
     
