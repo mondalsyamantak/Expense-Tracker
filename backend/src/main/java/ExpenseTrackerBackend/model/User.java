@@ -1,13 +1,17 @@
 package ExpenseTrackerBackend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Getter
     private String userId;
     @Getter
     @Setter
@@ -24,4 +28,7 @@ public class User {
     @Getter
     @Setter
     private String work;
+    @Getter
+    @Setter
+    private String displayName;
 }
