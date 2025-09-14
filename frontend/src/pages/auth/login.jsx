@@ -3,12 +3,36 @@ import { Bitcoin, GalleryVerticalEnd } from "lucide-react"
 import { LoginForm } from "@/components/login-form"
 import { Toaster, toast } from 'sonner'
 import axios from "axios";
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
+import { useEffect } from "react";
 
 export default function LoginPage() {
 
   const url = import.meta.env.VITE_BACKEND || "http://localhost:3000"
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("use effect ran")
+        if (location.state && location.state.message) {
+          // Display the message as a toast notification
+          console.log(location.state.message);
+          if (location.state.message != "") {
+            toast.success(location.state.message);
+            console.log("logged out")
+          }
+          // Clear the state to prevent duplicate toasts on re-render
+          location.state.message = null;
+          navigate("/login", {
+            state: {
+              message: "",
+            },
+            replace: true
+          })
+        }
+    })
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -23,12 +47,15 @@ export default function LoginPage() {
       },
       data: (data)
     })
-    .then(res => console.log(res)) //===> [remove this line]
     .catch(err => console.log(err));
     // [show the error in toast]
 
-    if (res.ok) {
-      navigate("/dashboard", {
+    if (res?.status == 200) {
+      
+
+      console.log("res has been recieved okay?", res)
+      localStorage.setItem("token", res.data);
+      navigate("/app", {
         state: {
           message: "Login successful",
         }

@@ -9,13 +9,13 @@ export default function SignUpPage() {
 
   const url = import.meta.env.VITE_BACKEND || "http://localhost:3000";
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
     console.log(data);
     
-    const res = axios(`${url}/SignUp`, {
+    const res = await axios(`${url}/SignUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

@@ -13,21 +13,42 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 import { useEffect } from "react"
-import { useLocation } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import { toast, Toaster } from "sonner"
 
 export default function Page() {
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.state && location.state.message) {
       // Display the message as a toast notification
       console.log(location.state.message);
-      toast.success(location.state.message);
+      if (location.state.message != "") {
+        toast.success(location.state.message);
+      }
       // Clear the state to prevent duplicate toasts on re-render
       location.state.message = null;
+      navigate("/app", {
+        state: {
+          message: "",
+        },
+        replace: true
+      })
     }
   }, [])
   return (
