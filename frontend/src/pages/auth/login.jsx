@@ -16,12 +16,12 @@ export default function LoginPage() {
     console.log(data);
     // toast.success("Data registered in console");
 
-    const req = await axios.fetch(`${url}/`, {
+    const res = await axios(`${url}/Login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      data: JSON.stringify(data)
+      data: (data)
     })
     .then(res => console.log(res)) //===> [remove this line]
     .catch(err => console.log(err));
