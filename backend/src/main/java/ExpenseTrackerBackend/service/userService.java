@@ -10,13 +10,17 @@ import org.springframework.stereotype.Service;
 public class userService {
     @Autowired
     private userRepo userDAO;
+
+    @Autowired
+    private JwtService jwtService;
+
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public String createUser(User user) {
         if (userDAO.findByUserName(user.getUserName()).isEmpty()) {
             user.setPassword(encoder.encode(user.getPassword()));
             userDAO.save(user);
-            return user.getUserId();
+            return jwtService.generateToken(user.getUserName(),user.getUserId());
         } else {
             return "Username already exists!";
         }
