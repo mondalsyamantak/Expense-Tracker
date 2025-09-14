@@ -22,11 +22,14 @@ export default function SignUpPage() {
       },
       data: data
     })
-    .then(res => console.log(res)) //====> [remove this line]
+    .then((res) => {
+      console.log(res.status)
+      if (res.status == 200) toast.success("Account created successfully, please log into your account")
+    }) //====> [remove this line]
     .catch(err => console.log(err));
     //[show the error in a sonner/toast message]
 
-    if (res.ok) {
+    if (res.status == 200) {
       // navigate("/login", {
       //   state: {
       //     message: "Signup successful please login",
@@ -34,6 +37,7 @@ export default function SignUpPage() {
       // })
       toast.success("signed up successfully")
     }
+    console.log(res.status)
 
     
   }
