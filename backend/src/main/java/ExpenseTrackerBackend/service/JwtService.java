@@ -67,6 +67,11 @@ public class JwtService {
         return claimResolver.apply(claims);
     }
 
+    public String extractUserId(String token) {
+        return extractClaim(token, claims -> claims.get("userId", String.class));
+    }
+
+
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getKey())

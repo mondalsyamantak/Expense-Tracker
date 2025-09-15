@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 
 export default function SignUpPage() {
 
-  const url = import.meta.env.VITE_BACKEND || "http://localhost:3000";
+  const url = import.meta.env.VITE_BACKEND || "http://localhost:3000"
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,18 +25,23 @@ export default function SignUpPage() {
     .then((res) => {
       console.log(res.status)
       if (res.status == 200) toast.success("Account created successfully, please log into your account")
+      navigate("/app", {
+        state: {
+          message: "SignUp successful",
+        }
+      })
     }) //====> [remove this line]
     .catch(err => console.log(err));
     //[show the error in a sonner/toast message]
 
-    if (res.status == 200) {
-      // navigate("/login", {
-      //   state: {
-      //     message: "Signup successful please login",
-      //   }
-      // })
-      toast.success("signed up successfully")
-    }
+    // if (res.status == 200) {
+    //   // navigate("/login", {
+    //   //   state: {
+    //   //     message: "Signup successful please login",
+    //   //   }
+    //   // })
+    //   toast.success("signed up successfully")
+    // }
     console.log(res.status)
 
     
