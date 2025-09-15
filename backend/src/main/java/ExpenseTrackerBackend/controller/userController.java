@@ -1,6 +1,7 @@
 package ExpenseTrackerBackend.controller;
 
 import ExpenseTrackerBackend.model.User;
+import ExpenseTrackerBackend.repo.userRepo;
 import ExpenseTrackerBackend.service.JwtService;
 import ExpenseTrackerBackend.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class userController {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    userRepo dao;
+
     @PostMapping("/SignUp")
     public String signUp(@RequestBody User user) {
         return uService.createUser(user);
@@ -31,7 +35,9 @@ public class userController {
         Authentication authentication =  authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
 
         if (authentication.isAuthenticated()) {
-            return  jwtService.generateToken(user.getUserName(),user.getUserId());
+            User dbUser = dao.findByUserName(user.getUserName())
+                         .orElseThrow(() -> new RuntimeException("User not found"));
+            return  jwtService.generateToken(dbUser.getUserName(),dbUser.getUserId());
         }
         else {return "Login Failed";}
     }
