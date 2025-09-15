@@ -4,6 +4,9 @@ import ExpenseTrackerBackend.model.User;
 import ExpenseTrackerBackend.repo.userRepo;
 import ExpenseTrackerBackend.service.JwtService;
 import ExpenseTrackerBackend.service.userService;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,8 +38,11 @@ public class userController {
         Authentication authentication =  authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
 
         if (authentication.isAuthenticated()) {
-            User dbUser = dao.findByUserName(user.getUserName())
-                         .orElseThrow(() -> new RuntimeException("User not found"));
+            Optional<User> dbUserOpt = dao.findByUserName(user.getUserName());
+            if (dbUserOpt.isEmpty()) {
+                return "User not found";
+            }
+            User dbUser = dbUserOpt.get();
             return  jwtService.generateToken(dbUser.getUserName(),dbUser.getUserId());
         }
         else {return "Login Failed";}
