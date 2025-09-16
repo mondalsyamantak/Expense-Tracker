@@ -19,7 +19,6 @@ public class UserData {
     private User user;
 
     @Getter
-    @Setter
     @ElementCollection
     private Set<Transaction> transactionHistory = new HashSet<>();
 
@@ -58,4 +57,8 @@ public class UserData {
     @Getter
     @Setter
     private String displayName;
+
+    public void setTransactionHistory(Transaction transaction) {
+        transactionHistory.add(transaction);
+    }
 }

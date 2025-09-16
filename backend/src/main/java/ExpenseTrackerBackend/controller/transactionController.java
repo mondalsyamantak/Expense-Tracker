@@ -1,10 +1,14 @@
 package ExpenseTrackerBackend.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ExpenseTrackerBackend.model.Transaction;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 public class transactionController {
+//    @PostMapping("/deleteTransaction")
+//    public Transaction deleteTransaction( @RequestBody Map<String, String> body){
+//    }
 }
