@@ -10,7 +10,7 @@ import {
 import { useTheme } from "@/globalProviders/ThemeProvider"
 
 export function ModeToggle() {
-  const { setTheme } = useTheme()
+  const { setTheme, setAccent } = useTheme()
 
   return (
     <DropdownMenu>
@@ -27,6 +27,9 @@ export function ModeToggle() {
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setAccent("blue")}>
+          blue
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
           System

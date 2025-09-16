@@ -15,6 +15,8 @@ export function ThemeProvider({
     return localStorage.getItem(storageKey) || defaultTheme
   })
 
+  const [accent, setAccent] = useState("blue");
+
   useEffect(() => {
     const root = window.document.documentElement
     root.classList.remove("light", "dark")
@@ -36,11 +38,15 @@ export function ThemeProvider({
       localStorage.setItem(storageKey, theme)
       setTheme(theme)
     },
+    accent,
+    setAccent
   }
 
   return (
     <ThemeProviderContext.Provider value={value} {...props}>
-      {children}
+      <div data-theme={accent} className="min-h-screen">
+        {children}
+      </div>
     </ThemeProviderContext.Provider>
   )
 }
