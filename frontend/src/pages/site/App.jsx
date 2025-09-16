@@ -26,12 +26,13 @@ import {
 } from "@/components/ui/alert-dialog"
 
 import { useEffect } from "react"
-import { useLocation, useNavigate } from "react-router"
+import { Outlet, useLocation, useNavigate } from "react-router"
 import { toast, Toaster } from "sonner"
 
 export default function Page() {
 
   const location = useLocation();
+  const path = location.pathname.replace(/\/$/, "");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,29 +64,38 @@ export default function Page() {
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
             />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Building Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem className="hidden md:block" style = {{"display" : (path === '/app')? "none" : "block"}}>
+                <BreadcrumbLink onClick={() => navigate("/")} className="cursor-pointer">
+                {/* {["/app", "/today", "/tomorrow", "/this-month"].some((field) => field?.trim() === location.pathname)? "Home" : "Other"} */}
+                Dashboard
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="hidden md:block" style = {{"display" : path === '/app'? "none" : "block"}} />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{
+                  (path === "/app")? "Dashboard" : 
+                    (path === "/app/profile")? "Profile" : 
+                      (path === "/app/transactions")? "Transactions" :
+                        "Unknown"
+                }</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          {/* <div className="ml-auto"><ModeToggle/></div> */}
+
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+        {/* <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
             <div className="bg-muted/50 aspect-video rounded-xl" />
             <div className="bg-muted/50 aspect-video rounded-xl" />
             <div className="bg-muted/50 aspect-video rounded-xl" />
           </div>
           <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
-        </div>
+        </div> */}
+        <Outlet />
       </SidebarInset>
     </SidebarProvider>
   )

@@ -6,7 +6,9 @@ import App from './pages/site/App.jsx'
 import { createBrowserRouter, Router, RouterProvider } from 'react-router'
 import LoginPage from './pages/auth/login.jsx'
 import SignUpPage from './pages/auth/signup.jsx'
-import Home from './pages/Home.jsx'
+import Home from './pages/Home/Home.jsx'
+import Profile from './pages/site/routes/Profile'
+import Dashboard from './pages/site/routes/Dashboard'
 // import { SignUpPage } from './pages/auth/signup.jsx'
 // import { LoginForm } from './components/login-form.jsx'
 
@@ -17,7 +19,18 @@ const router = createBrowserRouter ([
   },
   {
     path: '/app',
-    element: <App/>
+    element: <App/>,
+    children: [
+      {
+        path: '',
+        element: <Dashboard/>
+      },
+      {
+        path: 'profile',
+        element: <Profile/>
+      },
+      
+    ]
   },
   {
     path: '/login',

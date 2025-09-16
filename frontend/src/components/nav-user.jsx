@@ -38,7 +38,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { useNavigate } from "react-router"
+import { Link, useNavigate } from "react-router"
 
 export function NavUser({
   user
@@ -102,10 +102,12 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
+              <Link to="/app/profile">
+                <DropdownMenuItem >
+                  <BadgeCheck />
+                  Account
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem>
                 <CreditCard />
                 Billing
@@ -119,10 +121,10 @@ export function NavUser({
 
             <AlertDialog>
               <AlertDialogTrigger asChild>
-              <DropdownMenuItem onSelect = {(e) => e.preventDefault()}>
-              <LogOut />
-              Log out
-            </DropdownMenuItem>
+                <DropdownMenuItem onSelect = {(e) => e.preventDefault()}>
+                <LogOut />
+                Log out
+                </DropdownMenuItem>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
