@@ -1,6 +1,7 @@
 package ExpenseTrackerBackend.service;
 
 import ExpenseTrackerBackend.model.User;
+import ExpenseTrackerBackend.model.UserData;
 import ExpenseTrackerBackend.repo.userRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,8 @@ public class userService {
     AuthenticationManager authenticationManager;
     @Autowired
     userRepo dao;
+    @Autowired
+    userDataService userDataService;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -30,6 +33,7 @@ public class userService {
         if (userDAO.findByUserName(user.getUserName()).isEmpty()) {
             user.setPassword(encoder.encode(user.getPassword()));
             userDAO.save(user);
+            userDataService.createUserData(user);
             return jwtService.generateToken(user.getUserName(),user.getUserId());
         } else {
             return "Username already exists!";

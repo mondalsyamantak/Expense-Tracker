@@ -1,6 +1,7 @@
 package ExpenseTrackerBackend.service;
 
 import ExpenseTrackerBackend.model.Transaction;
+import ExpenseTrackerBackend.model.User;
 import ExpenseTrackerBackend.model.UserData;
 import ExpenseTrackerBackend.repo.userDataRepo;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,33 +22,43 @@ public class userDataService {
     @Autowired
     transactionService tservice;
 
+    public void createUserData(User user) {
+        UserData userData = new UserData();
+        userData.setUser(user);
+        userData.setDisplayName("Edit Display Name");
+        dao.save(userData);
+    }
+
+    private UserData findUser(String userID){
+        return dao.findById(userID).orElse(null);
+    }
+
     //profile picture,display name,
     public Map<String, String> getBasicData(String userID) {
-        UserData userDataOpt = dao.findByid(userID);
         Map<String, String> basicUserData = new HashMap<>();
-
+        UserData fetchedUser = findUser(userID);
         basicUserData.put("profilePicture",
-                userDataOpt.getProfilePicture());
+                fetchedUser.getProfilePicture());
 
         basicUserData.put("displayName",
-                userDataOpt.getDisplayName());
+                fetchedUser.getDisplayName());
         return basicUserData;
     }
 
     public String displayName(String userID,Map<String, String> body){
-        UserData fetchedUser = dao.findByid(userID);
+        UserData fetchedUser = findUser(userID);
         fetchedUser.setDisplayName(body.get("displayName"));
         return dao.save(fetchedUser).getDisplayName();
     }
 
     public String work(String userID, Map<String, String> body) {
-        UserData fetchedUser = dao.findByid(userID);
+        UserData fetchedUser = findUser(userID);
         fetchedUser.setWork(body.get("work"));
         return dao.save(fetchedUser).getWork();
     }
 
     public UserData addTransaction(String userID,Map<String, String> body){
-        UserData fetchedUser = dao.findByid(userID);
+        UserData fetchedUser = findUser(userID);
         Transaction t = tservice.createTransaction(body);
         switch (t.getType()) {
             case "UPI" -> {
