@@ -3,6 +3,7 @@ package ExpenseTrackerBackend.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,9 @@ public class UserData {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "userID") // foreign key column in UserData table
+    @JoinColumn(name = "userID")
+    @Setter
+    @Getter
     private User user;
 
     @Getter
@@ -57,6 +60,10 @@ public class UserData {
     @Getter
     @Setter
     private String displayName;
+
+    public UserData(){
+
+    }
 
     public void setTransactionHistory(Transaction transaction) {
         transactionHistory.add(transaction);
