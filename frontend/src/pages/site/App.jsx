@@ -67,7 +67,7 @@ export default function Page() {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem className="hidden md:block" style = {{"display" : (path === '/app')? "none" : "block"}}>
-                <BreadcrumbLink onClick={() => navigate("/")} className="cursor-pointer">
+                <BreadcrumbLink onClick={() => navigate("/app")} className="cursor-pointer">
                 {/* {["/app", "/today", "/tomorrow", "/this-month"].some((field) => field?.trim() === location.pathname)? "Home" : "Other"} */}
                 Dashboard
                 </BreadcrumbLink>

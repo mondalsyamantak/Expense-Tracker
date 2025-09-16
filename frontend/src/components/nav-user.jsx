@@ -118,7 +118,6 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <DropdownMenuItem onSelect = {(e) => e.preventDefault()}>
@@ -139,7 +138,6 @@ export function NavUser({
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
-          
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

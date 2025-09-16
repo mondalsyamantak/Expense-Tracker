@@ -34,7 +34,7 @@ import { UserRoundCheck, Mail, CheckCheck, Pencil, Trash2 } from 'lucide-react'
 function Profile() {
 
   const user = {
-    username: "Sammy",
+    username: "sampleusername",
     todoList: []
 
   }
@@ -44,7 +44,7 @@ function Profile() {
   }
   return (
     <>
-    <div className="w-full flex flex-row items-center p-3">
+    <div className="w-full flex flex-col items-center p-3">
       <div className="border rounded-2xl grow h-full items-center flex w-full flex-col p-3 ">
         <Avatar className="border-green-500 border-2 h-20 w-20 m-3">
           <AvatarImage src="https://github.com/shadcn.png" />
