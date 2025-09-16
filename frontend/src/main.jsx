@@ -52,7 +52,7 @@ createRoot(document.getElementById('root')).render(
   // <StrictMode>
   //   <RouterProvider router={router} />,
   // </StrictMode>,  =====> do this before final deployment
-  <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+  <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme" storageKey2='vite-ui-accent'>
     <RouterProvider router={router}/>
   </ThemeProvider>
   

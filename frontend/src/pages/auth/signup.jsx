@@ -4,6 +4,7 @@ import { Toaster, toast } from 'sonner'
 import { SignUpForm } from "../../components/signup-form";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export default function SignUpPage() {
 
@@ -59,6 +60,7 @@ export default function SignUpPage() {
             </div>
             Expense Tracker
           </a>
+          <ModeToggle className='ml-auto'/>
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
