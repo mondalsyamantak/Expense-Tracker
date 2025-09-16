@@ -9,6 +9,8 @@ import SignUpPage from './pages/auth/signup.jsx'
 import Home from './pages/Home/Home.jsx'
 import Profile from './pages/site/routes/Profile'
 import Dashboard from './pages/site/routes/Dashboard'
+import Transactions from './pages/site/routes/Transactions'
+import { ThemeProvider } from './globalProviders/ThemeProvider'
 // import { SignUpPage } from './pages/auth/signup.jsx'
 // import { LoginForm } from './components/login-form.jsx'
 
@@ -29,6 +31,10 @@ const router = createBrowserRouter ([
         path: 'profile',
         element: <Profile/>
       },
+      {
+        path: 'transactions',
+        element: <Transactions/>
+      },
       
     ]
   },
@@ -46,5 +52,8 @@ createRoot(document.getElementById('root')).render(
   // <StrictMode>
   //   <RouterProvider router={router} />,
   // </StrictMode>,  =====> do this before final deployment
-  <RouterProvider router={router}/>
+  <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <RouterProvider router={router}/>
+  </ThemeProvider>
+  
 )

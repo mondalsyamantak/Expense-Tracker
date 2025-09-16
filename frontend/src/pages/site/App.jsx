@@ -28,6 +28,7 @@ import {
 import { useEffect } from "react"
 import { Outlet, useLocation, useNavigate } from "react-router"
 import { toast, Toaster } from "sonner"
+import { ModeToggle } from "@/components/mode-toggle"
 
 export default function Page() {
 
@@ -58,7 +59,7 @@ export default function Page() {
       <SidebarInset>
         <Toaster richColors />
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
+          <div className="flex items-center gap-2 px-4 w-full">
             <SidebarTrigger className="-ml-1" />
             <Separator
               orientation="vertical"
@@ -83,9 +84,10 @@ export default function Page() {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          {/* <div className="ml-auto"><ModeToggle/></div> */}
+          <div className="ml-auto"><ModeToggle/></div>
 
           </div>
+
         </header>
         {/* <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
