@@ -29,14 +29,28 @@ import { useEffect } from "react"
 import { Outlet, useLocation, useNavigate } from "react-router"
 import { toast, Toaster } from "sonner"
 import { ModeToggle } from "@/components/mode-toggle"
+import axios from "axios"
 
 export default function Page() {
 
   const location = useLocation();
   const path = location.pathname.replace(/\/$/, "");
+  const url = import.meta.env.VITE_BACKEND;
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect( () => {
+    const fetchUserData = async () => {
+      const res = await axios.get(`${url}/basicData`, { 
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      })
+      .catch((err)=> {
+        console.log("error: ", err)
+      })
+
+      console.log("res: ", res)
+    }
+
+    fetchUserData();
     if (location.state && location.state.message) {
       // Display the message as a toast notification
       console.log(location.state.message);
