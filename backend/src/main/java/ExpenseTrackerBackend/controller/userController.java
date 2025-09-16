@@ -19,15 +19,6 @@ public class userController {
     @Autowired
     private userService uService;
 
-    @Autowired
-    JwtService jwtService;
-
-    @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    userRepo dao;
-
     @PostMapping("/SignUp")
     public String signUp(@RequestBody User user) {
         return uService.createUser(user);
@@ -35,17 +26,7 @@ public class userController {
 
     @PostMapping("/Login")
     public String login(@RequestBody User user) {
-        Authentication authentication =  authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
-
-        if (authentication.isAuthenticated()) {
-            Optional<User> dbUserOpt = dao.findByUserName(user.getUserName());
-            if (dbUserOpt.isEmpty()) {
-                return "User not found";
-            }
-            User dbUser = dbUserOpt.get();
-            return  jwtService.generateToken(dbUser.getUserName(),dbUser.getUserId());
-        }
-        else {return "Login Failed";}
+        return uService.login(user.getUserName(),user.getPassword());
     }
 
     @GetMapping("/Testing")
