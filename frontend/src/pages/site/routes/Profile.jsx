@@ -32,6 +32,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { UserRoundCheck, Mail, CheckCheck, Pencil, Trash2, Image } from 'lucide-react'
 import axios from 'axios'
+import { Card } from '@/components/ui/card'
 function Profile() {
   const url = import.meta.env.VITE_BACKEND || 'http://localhost:8080';
   const user = {
@@ -73,8 +74,9 @@ function Profile() {
   }
   return (
     <>
-    <div className="w-full flex flex-col lg:flex-row items-center p-3">
-      <div className="border rounded-2xl grow h-full items-center flex w-full flex-col p-3 ">
+    <div className="w-full flex lg:flex-row flex-col flex-nowrap p-3 gap-4">
+      {/* <Card className=" items-center flex w-full flex-col p-3 "> */}
+      <Card className="p-4 w-full flex items-center flex-7">
         <Avatar className="border-green-500 border-2 h-20 w-20 m-3">
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>CN</AvatarFallback>
@@ -179,8 +181,8 @@ function Profile() {
         </div>
               
         </div>
-      </div>
-      <div className="border rounded-2xl grow h-full items-center flex w-full flex-col m-3 p-5">
+      </Card>
+      <Card className="p-4 flex-10">
         <h1 className="font-bold mb-5">About Me</h1>
         <div className="flex flex-col">
         <p>
@@ -195,7 +197,7 @@ Props
         </p>
         <Button className="ml-auto mt-5"><Pencil/></Button>
       </div>
-    </div>
+    </Card>
         {/* <AlertDialog >
               <AlertDialogTrigger asChild className="w-full">
               <Button className="text-red-500 m-3" variant="outline"> <Trash2/> Delete account</Button>
