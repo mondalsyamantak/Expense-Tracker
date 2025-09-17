@@ -23,29 +23,69 @@ export function ModeToggle({...props}) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem onClick={
+          (e) => {
+            e.preventDefault();
+            setTheme("light");
+          }
+        }>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem onClick={
+          (e) => {
+            e.preventDefault();
+            setTheme("dark");
+          }
+        }>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem onClick={
+          (e) => {
+            e.preventDefault();
+            setTheme("system");
+          }
+        }>
           System
         </DropdownMenuItem>
         <DropdownMenuSeparator/>
-        <DropdownMenuItem onClick={() => setAccent("red")}>
+        <DropdownMenuItem onClick={
+          (e) => {
+            e.preventDefault();
+            setAccent("red");
+          }
+        }>
           Red
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setAccent("blue")}>
+        <DropdownMenuItem onClick={
+          (e) => {
+            e.preventDefault();
+            setAccent("blue");
+          }
+        }>
           Blue
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setAccent("orange")}>
+        <DropdownMenuItem onClick={
+          (e) => {
+            e.preventDefault();
+            setAccent("orange");
+          }
+        }>
           Orange
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setAccent("green")}>
+        <DropdownMenuItem onClick={
+          (e) => {
+            e.preventDefault();
+            setAccent("green");
+          }
+        }>
           Green
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setAccent("violet")}>
+        <DropdownMenuItem onClick={
+          (e) => {
+            e.preventDefault();
+            setAccent("violet");
+          }
+        }>
           Violet
         </DropdownMenuItem>
         

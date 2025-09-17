@@ -9,9 +9,16 @@ import TableDashboard from '../components/table-dashboard'
 
 function Dashboard() {
   return (
-      <main className="flex-1 p-6 space-y-6">
+      <main className="
+      flex-1 
+      p-6 space-y-6
+      ">
       {/* Top summary cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="
+      grid 
+      grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
+      gap-6
+      ">
         <Card className="">
           <CardHeader>
             <CardDescription>Total Balance:</CardDescription>
@@ -39,7 +46,11 @@ function Dashboard() {
       </div>
 
       {/* Charts row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="
+      grid 
+      grid-cols-1 lg:grid-cols-2 
+      gap-6
+      ">
       <ChartPieLabel/>
       <ChartPieLabel/>
       <ChartAreaGradient/>

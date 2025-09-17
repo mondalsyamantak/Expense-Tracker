@@ -70,7 +70,7 @@ export function AppSidebar({
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">Expense Tracker</span>
-                  <span className="truncate text-xs">Pretty self-explanatory?</span>
+                  <span className="text-xs">Kyuki aaj kamaenga to kal khaaenga</span>
                 </div>
               </Link>
             </SidebarMenuButton>

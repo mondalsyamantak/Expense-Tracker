@@ -73,152 +73,139 @@ function Profile() {
     });
   }
   return (
-    <>
-    <div className="w-full flex lg:flex-row flex-col flex-nowrap p-3 gap-4">
-      {/* <Card className=" items-center flex w-full flex-col p-3 "> */}
-      <Card className="p-4 w-full flex items-center flex-7">
-        <Avatar className="border-green-500 border-2 h-20 w-20 m-3">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-        <div className="flex-col flex items-center">
-          <h1 className="font-bold">
-           {user.fullName}
-          </h1>
-          <h2 className="">
-            Productivity enthusiast
-          </h2>
-        </div>
-
-        <div className="mt-6 w-full p-3 flex flex-col ">
-          <div className="w-full flex items-center m-1"> 
-            <UserRoundCheck/> 
-            <p className="mx-3">Username: {user.username}</p>
-          </div>
-          <div className="w-full flex items-center m-1"> 
-            <Mail/> 
-            <p className="mx-3">Email: {user.email}</p>
+    <main className="
+    flex-1 
+    p-6 space-y-6
+    ">
+      <div className="
+      w-full 
+      flex lg:flex-row flex-col flex-nowrap 
+      gap-6">
+        {/* <Card className=" items-center flex w-full flex-col p-3 "> */}
+        <Card className="p-6 w-full flex items-center flex-7">
+          <Avatar className="border-green-500 border-2 h-20 w-20 m-3">
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <div className="flex-col flex items-center">
+            <h1 className="font-bold">
+            {user.fullName}
+            </h1>
+            <h2 className="">
+              Productivity enthusiast
+            </h2>
           </div>
 
-          {/* Image input section: */}
-          <div className='flex flex-row ml-auto gap-2 mt-5'>
-            <Dialog>
-              <form onSubmit={handleImageUpload}>
-                <DialogTrigger asChild>
-                  <Button className="" type="button"><Image/>Change Profile Picture</Button>  
-                </DialogTrigger>
+          <div className="mt-6 w-full p-3 flex flex-col ">
+            <div className="w-full flex items-center m-1"> 
+              <UserRoundCheck/> 
+              <p className="mx-3">Username: {user.username}</p>
+            </div>
+            <div className="w-full flex items-center m-1"> 
+              <Mail/> 
+              <p className="mx-3">Email: {user.email}</p>
+            </div>
+
+            {/* Image input section: */}
+            <div className='flex flex-row ml-auto gap-2 mt-5'>
+              <Dialog>
+                <form onSubmit={handleImageUpload}>
+                  <DialogTrigger asChild>
+                    <Button className="" type="button"><Image/>Change Profile Picture</Button>  
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Edit profile picture</DialogTitle>
+                      <DialogDescription>
+                        Upload an image you want to set as your profile picture
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex flex-col items-center gap-4 w-full">
+                      <div className="grid gap-3">
+                        <Label htmlFor="profilepic">Image</Label>
+                        <Input id="profilepic" name="profilePic" type="file" accept = "image/*" onChange = {handleImageChange} />
+                      </div>
+                      {preview && (
+                        <Avatar className="my-2 w-60 h-60">
+                          <AvatarImage src={preview} alt="preview" className="flex-nowrap" />
+                        </Avatar>
+                      )}
+                    </div>
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <Button variant="outline" onClick = {() => setPreview("")}>Cancel</Button>
+                      </DialogClose>
+                      <Button type="submit">Save changes</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </form>
+              </Dialog>
+
+              {/* Edit profile section: */}
+              <Dialog>
                 <DialogContent className="sm:max-w-[425px]">
+                <form 
+                // onSubmit={handleSubmit} 
+                className="p-0 m-0">
                   <DialogHeader>
-                    <DialogTitle>Edit profile picture</DialogTitle>
+                    <DialogTitle className="text-center">Edit Profile</DialogTitle>
                     <DialogDescription>
-                      Upload an image you want to set as your profile picture
+                      Edit your profile
                     </DialogDescription>
                   </DialogHeader>
-                  <div className="flex flex-col items-center gap-4 w-full">
-                    <div className="grid gap-3">
-                      <Label htmlFor="profilepic">Image</Label>
-                      <Input id="profilepic" name="profilePic" type="file" accept = "image/*" onChange = {handleImageChange} />
+                  <div className="grid gap-4 my-4">
+
+                    <div className="grid gap-1">
+                      <Label htmlFor="username-1">Username</Label>
+                      <Input id="username-1" name="username" placeholder="Edit username" autoComplete="off" defaultValue={user.username} />
                     </div>
-                    {preview && (
-                      <Avatar className="my-2 w-60 h-60">
-                        <AvatarImage src={preview} alt="preview" className="flex-nowrap" />
-                      </Avatar>
-                    )}
+
+                    <div className="grid gap-1">
+                      <Label htmlFor="fullName-1">Full Name</Label>
+                      <Input id="fullName-1" name="fullName" placeholder="Edit your display name" autoComplete="off" defaultValue={user.fullName}/>
+                    </div>
+                    <div className="grid gap-1">
+                      <Label htmlFor="email-1">Email</Label>
+                      <Input id="email-1" name="email" placeholder="Edit your email" autoComplete="off" defaultValue={user.email}/>
+                    </div>
+                    
                   </div>
                   <DialogFooter>
                     <DialogClose asChild>
-                      <Button variant="outline" onClick = {() => setPreview("")}>Cancel</Button>
+                      <Button variant="outline" className="cursor-pointer">Cancel</Button>
                     </DialogClose>
-                    <Button type="submit">Save changes</Button>
+                    <DialogClose asChild>
+                      <Button type="submit" className="cursor-pointer">Submit</Button>
+                    </DialogClose>
                   </DialogFooter>
-                </DialogContent>
-              </form>
+                </form>
+                </DialogContent>  
+                <DialogTrigger asChild>
+                <Button className="" type="button"><Pencil/>Edit</Button>  
+                </DialogTrigger>
             </Dialog>
-
-            {/* Edit profile section: */}
-            <Dialog>
-              <DialogContent className="sm:max-w-[425px]">
-              <form 
-              // onSubmit={handleSubmit} 
-              className="p-0 m-0">
-                <DialogHeader>
-                  <DialogTitle className="text-center">Edit Profile</DialogTitle>
-                  <DialogDescription>
-                    Edit your profile
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 my-4">
-
-                  <div className="grid gap-1">
-                    <Label htmlFor="username-1">Username</Label>
-                    <Input id="username-1" name="username" placeholder="Edit username" autoComplete="off" defaultValue={user.username} />
-                  </div>
-
-                  <div className="grid gap-1">
-                    <Label htmlFor="fullName-1">Full Name</Label>
-                    <Input id="fullName-1" name="fullName" placeholder="Edit your display name" autoComplete="off" defaultValue={user.fullName}/>
-                  </div>
-                  <div className="grid gap-1">
-                    <Label htmlFor="email-1">Email</Label>
-                    <Input id="email-1" name="email" placeholder="Edit your email" autoComplete="off" defaultValue={user.email}/>
-                  </div>
-                  
-                </div>
-                <DialogFooter>
-                  <DialogClose asChild>
-                    <Button variant="outline" className="cursor-pointer">Cancel</Button>
-                  </DialogClose>
-                  <DialogClose asChild>
-                    <Button type="submit" className="cursor-pointer">Submit</Button>
-                  </DialogClose>
-                </DialogFooter>
-              </form>
-              </DialogContent>  
-              <DialogTrigger asChild>
-              <Button className="" type="button"><Pencil/>Edit</Button>  
-              </DialogTrigger>
-          </Dialog>
-        </div>
-              
-        </div>
-      </Card>
-      <Card className="p-4 flex-10">
-        <h1 className="font-bold mb-5">About Me</h1>
-        <div className="flex flex-col">
-        <p>
-        If you need to change the code in sidebar.tsx, you are encouraged to do so. The code is yours. Use sidebar.tsx as a starting point and build your own.
-
-In the next sections, we'll go over each component and how to use them.
-SidebarProvider
-
-The SidebarProvider component is used to provide the sidebar context to the Sidebar component. You should always wrap your application in a SidebarProvider component.
-Props
-
-        </p>
-        <Button className="ml-auto mt-5"><Pencil/></Button>
-      </div>
-    </Card>
-        {/* <AlertDialog >
-              <AlertDialogTrigger asChild className="w-full">
-              <Button className="text-red-500 m-3" variant="outline"> <Trash2/> Delete account</Button>
+          </div>
                 
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle className="text-red-500">Delete Account</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action cannot be undone, are you absolutely sure you want to permanently delete this account?
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDelete} className="cursor-pointer">Continue</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog> */}
-        
+          </div>
+        </Card>
+        <Card className="p-6 flex-10">
+          <h1 className="font-bold">About Me</h1>
+          <div className="flex flex-col">
+          <p>
+          If you need to change the code in sidebar.tsx, you are encouraged to do so. The code is yours. Use sidebar.tsx as a starting point and build your own.
+
+  In the next sections, we'll go over each component and how to use them.
+  SidebarProvider
+
+  The SidebarProvider component is used to provide the sidebar context to the Sidebar component. You should always wrap your application in a SidebarProvider component.
+  Props
+
+          </p>
+          <Button className="ml-auto"><Pencil/></Button>
+        </div>
+        </Card>
       </div>
-      </>
+    </main>
   )
 }
 
