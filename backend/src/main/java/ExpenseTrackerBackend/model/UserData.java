@@ -6,7 +6,9 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 @Entity
 public class UserData {
@@ -31,6 +33,10 @@ public class UserData {
 
     @Getter
     @Setter
+    private long income;
+
+    @Getter
+    @Setter
     private int cashTransaction;
 
     @Getter
@@ -38,16 +44,14 @@ public class UserData {
     private int cardTransaction;
 
     @Getter
-    @Setter
-    private int travelExpense;
-
-    @Getter
-    @Setter
-    private int foodExpense;
-
-    @Getter
-    @Setter
-    private int miscellaneousExpense;
+    @ElementCollection
+    @CollectionTable(
+            name = "user_expenses",
+            joinColumns = @JoinColumn(name = "id")
+    )
+    @MapKeyColumn(name = "category")
+    @Column(name = "amount")
+    private Map<String, Integer> expense = new TreeMap<>();
 
     @Getter
     @Setter
@@ -62,10 +66,24 @@ public class UserData {
     private String displayName;
 
     public UserData(){
-
+        expense.put("travelExpense",0);
+        expense.put("foodExpense",0);
     }
 
     public void setTransactionHistory(Transaction transaction) {
         transactionHistory.add(transaction);
+    }
+
+    public Map<String, Integer> setExpense(String category, int amount) throws RuntimeException {
+        if(expense.containsKey(category)){
+            expense.put(category, expense.get(category) + amount);
+            return expense;
+        }else if(amount > 0){
+            expense.put(category, amount);
+            return expense;
+        }else if (!expense.containsKey(category) && amount == 0) {
+            expense.put(category, 0);
+            return expense;
+        }else throw new RuntimeException("Expense defined properly");
     }
 }

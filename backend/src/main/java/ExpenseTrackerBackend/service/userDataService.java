@@ -77,14 +77,7 @@ public class userDataService {
                 return null;
             }
         }
-        switch (t.getExpenseType()){
-            case "food" -> fetchedUser.setFoodExpense(t.getAmount() + fetchedUser.getFoodExpense());
-            case "travel" -> fetchedUser.setTravelExpense(t.getAmount() + fetchedUser.getTravelExpense());
-            case "miscellaneous" -> fetchedUser.setMiscellaneousExpense(t.getAmount() + fetchedUser.getMiscellaneousExpense());
-            case null, default -> {
-                return null;
-            }
-        }
+        fetchedUser.setExpense(t.getExpenseType(),t.getAmount());
         return dao.save(fetchedUser);
     }
 }

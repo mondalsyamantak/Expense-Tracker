@@ -44,6 +44,11 @@ public class userDataController {
         return service.work(userID,body);
     }
 
+
+    //amount
+    //type - card,cash,upi
+    //description -
+    //expenseType - food,travel, ...
     @PostMapping("/transaction")
     public UserData transaction(HttpServletRequest request, @RequestBody Map<String, String> body){
         String userID = getUserId(request);
