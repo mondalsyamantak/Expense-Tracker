@@ -1,0 +1,24 @@
+
+1. Top 4 summary cards
+Current Balance
+Income (this month)
+Expense (this month)
+Savings % ( (Income–Expense)/Income )
+
+2. Charts
+Pie chart → Expense breakdown by category (filterable: this month, last month, year, all time)
+Line chart → Income vs Expense trend over time
+Bar/line chart → All-time savings trend
+
+3. Recent Transactions Table
+Columns: Date, Category, Method, Amount (negative for expense, positive for income
+{this will be handled in the frontend the negative positive thing just send a field data stating it is 
+income or expense})
+Show \~10 latest, with option to “View All ==> takes us to Transactions page”
+
+Api endpoints that can be added: 
+1.GET /transactions?limit=20&sort=desc            # for recent transaction table dashboard
+2.GET /stats/summary?period=this_month            # balance, income, expenses, savings%
+3.GET /stats/category-breakdown?period=this_month   # for pie chart, values for period: this_month, last_month, year, all_time
+4.GET /stats/income-vs-expense?from=2025-01&to=2025-09 # this year or 6 months etc [or all time idk] income vs expense line graph
+5.GET /stats/savings-trend?period=year  # this year or 6 months [or all time idk] savings trend bar/line graph
