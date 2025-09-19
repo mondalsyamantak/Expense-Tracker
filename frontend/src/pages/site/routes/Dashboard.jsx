@@ -1,13 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { Separator } from '@/components/ui/separator'
 import { Breadcrumb, BreadcrumbPage, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
-import ChartPieLabel from '../components/chart-pie-label'
-import { ChartAreaGradient } from '../components/chart-area-gradient'
+import {ChartPieLabel, ChartPieLabel2} from '../components/chart-pie-label'
+import { ChartAreaGradient, ChartAreaGradient2 } from '../components/chart-area-gradient'
 import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card'
 import TableDashboard from '../components/table-dashboard'
+import axios from 'axios'
+import { ChartAreaAxes } from '../components/chart-area-axes'
 
 function Dashboard() {
+  const [piechart1, setPiechart1] = useState(null);
+  const [piechart2, setPiechart2] = useState(null);
+  const [areachart1, setAreachart1] = useState(null);
+  useEffect(() => {
+    const res = axios.get('/api/v1/transactions/summary', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(res => setPiechart1(res.data))
+    .catch(err => console.log(err))
+
+    const res2 = axios.get('/api/v1/transactions/summary', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(res => setPiechart2(res.data))
+    .catch(err => console.log(err))
+
+    const res3 = axios.get('/api/v1/transactions/summary', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(res => setAreachart1(res.data))
+    .catch(err => console.log(err))
+
+  })
   return (
       <main className="
       flex-1 
@@ -52,8 +83,10 @@ function Dashboard() {
       gap-6
       ">
       <ChartPieLabel/>
-      <ChartPieLabel/>
+      {/* <ChartPieLabel2/> */}
       <ChartAreaGradient/>
+      {/* <ChartAreaAxes/> */}
+      <ChartAreaGradient2/>
       <Card>
         <CardHeader>
           <CardTitle>Recent Transactions</CardTitle>
