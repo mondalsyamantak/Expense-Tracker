@@ -89,7 +89,7 @@ export function ChartPieLabel() {
             <SelectItem value="thismonth">This Month</SelectItem>
             <SelectItem value="lastmonth">Last Month</SelectItem>
             <SelectItem value="lastyear">Last Year</SelectItem>
-            <SelectItem value="lastyear">All Time</SelectItem>
+            <SelectItem value="alltime">All Time</SelectItem>
           </SelectContent>
         </Select>
       </CardHeader>
