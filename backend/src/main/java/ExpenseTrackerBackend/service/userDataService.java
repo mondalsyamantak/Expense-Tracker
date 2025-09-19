@@ -29,7 +29,7 @@ public class userDataService {
         dao.save(userData);
     }
 
-    private UserData findUser(String userID){
+    public UserData findUser(String userID){
         return dao.findById(userID).orElse(null);
     }
 

@@ -21,6 +21,8 @@ public class Transaction {
     @Getter
     @Setter
     private int amount;
+
+    @Getter
     private Date date;
     @Getter
     @Setter
@@ -36,4 +38,5 @@ public class Transaction {
         this.date = new Date();
         this.transactionID = UUID.randomUUID().toString();
     }
+
 }
