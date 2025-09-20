@@ -53,12 +53,13 @@ import { useGlobal } from "@/globalProviders/GlobalContext"
 
 export function DataTable({
   columns,
+  fetchData,
+  data,
   ...props
   // data,
 }) {
 
   const url = import.meta.env.VITE_BACKEND;
-  const [data, setData] = React.useState(null);
   const navigate = useNavigate();
   const {user, setUser} = useGlobal();
 
@@ -66,31 +67,7 @@ export function DataTable({
   const [columnFilters, setColumnFilters] = React.useState([])
   const [sorting, setSorting] = React.useState([])
 
-  const fetchData = async () => {
-    const req = await axios.get(`${url}/transaction`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      }
-    })
-    .then (res => 
-    {
-      setData(res.data);
-      console.log(res.data);
-      let categories = [];
-      for(const entry of res.data){
-        const category = entry["expenseType"];
-        if (!categories.includes(category)){
-          categories.push(category);
-        }
-      }
-      console.log("After saving, categories are: ",categories);
-
-      localStorage.setItem("categories", JSON.stringify(categories));
-      setUser({...user, categories: categories});
-      console.log("categories redone: ", user.categories);
-    })
-    .catch (err => console.log(err));
-  }
+  
 
   const handleAddTransaction = async (e) => {
     // Logic to add a new transaction
@@ -115,7 +92,7 @@ export function DataTable({
   }
 
   const table = useReactTable({
-    data : data ?? null,
+    data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -133,8 +110,11 @@ export function DataTable({
 
 
   React.useEffect(() => {
-    fetchData();
-
+    console.log(data);
+    if (typeof fetchData == "function") {
+      fetchData();
+      
+    }
   }, [])
 
   if (data == null) {
@@ -155,7 +135,7 @@ export function DataTable({
         {/* <Button className='ml-auto'><Plus/>Add Transaction Data</Button> */}
         <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline"><Plus/>Add Transaction Data</Button>
+              <Button><Plus/>Add Transaction Data</Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[425px]">
