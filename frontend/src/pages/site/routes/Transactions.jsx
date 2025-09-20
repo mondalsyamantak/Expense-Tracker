@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import { DataTable } from '../transactionTable/data-table'
 import {columns} from '../transactionTable/columns'
+import axios from 'axios';
+import { Skeleton } from '@/components/ui/skeleton';
+import CategoryManager from '../transactionTable/category-manager';
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
+import { GripVertical } from 'lucide-react';
 
 export const payments= [
   {
@@ -19,6 +28,7 @@ export const payments= [
 ]
 
 function Transactions() {
+  
   return (
     <main className="
     flex-1 
@@ -27,8 +37,19 @@ function Transactions() {
       <div className="
       w-full 
       flex lg:flex-row flex-col flex-nowrap 
-      gap-6">
-        <DataTable columns={columns} data={payments}/>
+      gap-6
+      ">
+        {/* <DataTable columns={columns} className=''/>
+        <CategoryManager className='flex-2 w-full'/> */}
+        <ResizablePanelGroup direction="horizontal" className="h-full gap-5">
+          <ResizablePanel defaultSize={80}>
+            <DataTable columns={columns}/>
+          </ResizablePanel>
+          <ResizableHandle withHandle className="bg-primary"/>
+          <ResizablePanel>
+            <CategoryManager defaultSize={20} />
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </div>
     </main>
   )

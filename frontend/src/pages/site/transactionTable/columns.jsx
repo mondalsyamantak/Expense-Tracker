@@ -24,14 +24,50 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import { ArrowUpDown } from "lucide-react"
+
 export const columns = [
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("date"))
+      return (
+        <div className="font-medium">
+          {date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
+        </div>
+      )
+    },
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "type",
+    header: "Method",
+  },
+  {
+    accessorKey: "description",
+    header: "Description",
+    cell: ({ row }) => {
+      const description = row.getValue("description")
+      return <div className="max-w-sm truncate">{description}</div>
+    },
+  },
+  {
+    accessorKey: "expenseType",
+    header: "Category",
   },
   {
     accessorKey: "amount",

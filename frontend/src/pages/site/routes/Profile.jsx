@@ -43,6 +43,11 @@ function Profile() {
 
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("submitted with data: ", new FormData(e.target))
+  }
+
   const handleDelete = async () => {
     console.log("clicked Delete")
   }
@@ -145,7 +150,7 @@ function Profile() {
               <Dialog>
                 <DialogContent className="sm:max-w-[425px]">
                 <form 
-                // onSubmit={handleSubmit} 
+                onSubmit={handleSubmit} 
                 className="p-0 m-0">
                   <DialogHeader>
                     <DialogTitle className="text-center">Edit Profile</DialogTitle>
