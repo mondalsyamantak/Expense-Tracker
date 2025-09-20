@@ -60,7 +60,6 @@ function AddTransactions({fetchData, ...props}) {
                   <Label htmlFor="description">Short Note:</Label>
                   <Input id="description" name="description" required />
                 </div>
-                <
                 <div className="
                   grid grid-cols-2 grid-rows-2 grid-flow-col 
                   gap-x-3 
