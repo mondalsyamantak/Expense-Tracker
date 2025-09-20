@@ -42,11 +42,12 @@ function AddTransactions({fetchData, ...props}) {
   }
   return (
     <Card className={"w-full "} {...props}>
-      <Toaster richColors/>
+
       <CardHeader>
         <CardTitle>Add Transactions</CardTitle>
       </CardHeader>
       <CardContent>
+              <Toaster richColors/>
           <form 
             onSubmit={handleAddTransaction}
             className="m-0 p-0 flex flex-col gap-4"
@@ -63,6 +64,7 @@ function AddTransactions({fetchData, ...props}) {
                 <div className="
                   grid grid-cols-2 grid-rows-2 grid-flow-col 
                   gap-x-3 
+                  mb-2
                 ">
 
                   <Label htmlFor="type">Payment method:</Label>
@@ -97,7 +99,7 @@ function AddTransactions({fetchData, ...props}) {
                   </Select>
 
                 </div>
-                <Button className={'mt-4'} type="submit">Add Transaction</Button>
+                <Button className={'mt-auto'} type="submit">Add Transaction</Button>
               </div>
             </form>  
       </CardContent>
