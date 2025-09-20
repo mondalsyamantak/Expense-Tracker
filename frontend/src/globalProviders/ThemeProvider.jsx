@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
+import { GlobalProvider } from "./GlobalContext"
 
 const ThemeProviderContext = createContext({
   theme: "system",
@@ -65,9 +66,9 @@ export function ThemeProvider({
 
   return (
     <ThemeProviderContext.Provider value={value} {...props}>
-      {/* <div data-theme={accent} className="min-h-screen"> */}
+      <GlobalProvider>
         {children}
-      {/* </div> */}
+      </GlobalProvider>
     </ThemeProviderContext.Provider>
   )
 }

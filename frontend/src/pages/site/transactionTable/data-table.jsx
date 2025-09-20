@@ -49,6 +49,7 @@ import {
 } from "@/components/ui/select"
 import axios from "axios"
 import { useNavigate } from "react-router"
+import { useGlobal } from "@/globalProviders/GlobalContext"
 
 export function DataTable({
   columns,
@@ -59,6 +60,7 @@ export function DataTable({
   const url = import.meta.env.VITE_BACKEND;
   const [data, setData] = React.useState(null);
   const navigate = useNavigate();
+  const {user, setUser} = useGlobal();
 
   const [columnVisibility, setColumnVisibility] = React.useState({})
   const [columnFilters, setColumnFilters] = React.useState([])
@@ -82,7 +84,10 @@ export function DataTable({
         }
       }
       console.log("After saving, categories are: ",categories);
+
       localStorage.setItem("categories", JSON.stringify(categories));
+      setUser({...user, categories: categories});
+      console.log("categories redone: ", user.categories);
     })
     .catch (err => console.log(err));
   }
@@ -196,9 +201,16 @@ export function DataTable({
                       <SelectValue placeholder="Category" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="category1">Sample Category 1</SelectItem>
+                      {/* <SelectItem value="category1">Sample Category 1</SelectItem>
                       <SelectItem value="category2 ">Sample Category 2</SelectItem>
-                      <SelectItem value="category3">Sample Category 3</SelectItem>
+                      <SelectItem value="category3">Sample Category 3</SelectItem> */}
+                      { (user.categories != []) ?
+                          user.categories.map((category) => (
+                          <SelectItem key={category} value={category}>{category}</SelectItem>
+                        ))
+                        :
+                        <div>No category available</div>
+                      }
                     </SelectContent>
                   </Select>
 

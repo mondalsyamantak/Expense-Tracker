@@ -12,15 +12,33 @@ import {
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useGlobal } from '@/globalProviders/GlobalContext';
 
 function CategoryManager({...props}) {
   const [categories, setCategories] = useState([]);
+  const {user, setUser} = useGlobal();
 
   useEffect(() => {
     console.log(localStorage);
     setCategories(localStorage.getItem('categories') ? JSON.parse(localStorage.getItem('categories')) : []);
   }, [])
 
+  const handleAddCategory = (e) => {
+    e.preventDefault();
+
+    const category = new FormData(e.target).get('new-category-input').trim();
+
+    if (!category) return;
+    
+    console.log("reached")
+    if (!categories.includes(category)) {
+      const newCategories = [...categories, category];
+      setCategories(newCategories);
+      setUser({...user, categories: newCategories});
+      localStorage.setItem('categories', JSON.stringify(newCategories));
+      e.target.reset();
+    }
+  }
   
 
 
@@ -40,19 +58,28 @@ function CategoryManager({...props}) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {categories.map((category)=>(
-              <TableRow key={categories.indexOf(category)}>
-                <TableCell className="font-medium text-center">{category}</TableCell>     
-              </TableRow>
-            ))}
+            { (categories.length != 0) ? 
+              categories.map((category)=>(
+                <TableRow key={categories.indexOf(category)}>
+                  <TableCell className="font-medium text-center">{category}</TableCell>     
+                </TableRow>
+              )) :
+              <div className='w-full text-center p-4'>No results.</div>
+          }
           </TableBody>
           
         </Table>
         </div>
       </CardContent>
-      <CardFooter className={'flex justify-end gap-3'}>
-        <Input placeholder='New Category' value="this part doesnt work yet im working on it" disabled id='new-category-input' className='mr-2'/>
-        <Button><Plus/>Add</Button>
+      <CardFooter>
+        <form 
+        onSubmit={handleAddCategory} className='flex w-full justify-end'>
+          <Input placeholder=' Add new category'
+          id='new-category-input' 
+          name='new-category-input'
+          className='mr-2'/>
+          <Button type="submit" ><Plus/>Add</Button>
+        </form>
       </CardFooter>
     </Card>
   )
