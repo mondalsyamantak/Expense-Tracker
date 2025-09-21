@@ -1,64 +1,47 @@
-import React from 'react'
 //import { useNavigate } from 'react-router'
 import {Button} from "@mui/material";
+import DotGrid from "@/components/Backgrounds/DotGrid.jsx";
+import {useNavigate} from "react-router";
 
 function Home() {
 
-  // const navigate = useNavigate();
+    const navigate = useNavigate();
+
   return (
-    // <div>
-    //   {/* Hero Section */}
-    //   <section style={{ padding: '50px', textAlign: 'center', backgroundColor: '#f4f4f4' }}>
-    //     <h1>Welcome to Expense Tracker</h1>
-    //     <p>Track your expenses and manage your finances effortlessly.</p>
-    //     <button className='rounded-2xl p-3 m-2 cursor-pointer bg-amber-500 hover:bg-amber-100 duration-200 ease-in-out' onClick={() => navigate("/app")}>Get Started</button>
-    //   </section>
-    //
-    //   {/* Features Section */}
-    //   <section style={{ padding: '50px', textAlign: 'center' }}>
-    //     <h2>Why Choose Expense Tracker?</h2>
-    //     <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '30px' }}>
-    //       <div style={{ maxWidth: '300px' }}>
-    //         <h3>Easy to Use</h3>
-    //         <p>Our intuitive interface makes tracking expenses a breeze.</p>
-    //       </div>
-    //       <div style={{ maxWidth: '300px' }}>
-    //         <h3>Detailed Reports</h3>
-    //         <p>Get insights into your spending habits with detailed reports.</p>
-    //       </div>
-    //       <div style={{ maxWidth: '300px' }}>
-    //         <h3>Secure</h3>
-    //         <p>Your data is safe with our top-notch security measures.</p>
-    //       </div>
-    //     </div>
-    //   </section>
-    //
-    //   {/* Call to Action Section */}
-    //   <section style={{ padding: '50px', textAlign: 'center', backgroundColor: '#f4f4f4' }}>
-    //     <h2>Start Managing Your Expenses Today</h2>
-    //     <button style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>Sign Up Now</button>
-    //   </section>
-    // </div>
       <>
-          <section className={`h-[100vh] w-screen flex flex-col justify-center items-center p-32`}>
-              <div className={`h-full w-full flex justify-between items-center`}>
+          <section className={`h-[100vh] w-screen flex flex-col justify-center items-center`}>
+              <div className="absolute inset-0 -z-10 h-full w-full">
+                  <DotGrid
+                      dotSize={3}
+                      gap={25}
+                      baseColor="#E5C8C8FF"
+                      activeColor="#5227FF"
+                      proximity={150}
+                      shockRadius={250}
+                      shockStrength={5}
+                      resistance={750}
+                      returnDuration={1.5}
+                  />
+              </div>
+              <div className={`h-[60%] w-full flex justify-between items-center  p-32`}>
                   <div>
-                      <p className={`text-6xl font-[Helvetica] font-bold`}>Track with Ease</p>
-                      <p className={`text-4xl font-[Helvetica] font-semibold`}>Analyse your expenses.</p>
+                      <p className={`text-6xl font-roboto font-semibold z-10`}>Track your <span className={`font-bold bg-yellow-300 p-2`}>Money</span></p>
+                      <p className={`text-4xl font-roboto font-semibold mt-8`}>like a <span className={` text-6xl font-bold bg-yellow-300 p-2 -z-10`}>PRO</span>.</p>
                   </div>
-                  <div className={`text-md font-[Helvetica] font-medium w-[30%]`}>
+                  <div className={`text-md font-[Helvetica] font-medium w-[30%] p-16 hover:backdrop-blur-xs`}>
                       <p className={`flex flex-wrap`}>lorem Lorem Ipsum is simply dummy text of the printing and
                           typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the
-                          1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
-                          book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                          remaining essentially unchanged. It was popularised in </p>
+                          1500s, when an unknown printe</p>
                   </div>
               </div>
-              <div>
-                  <Button type="submit" variant={"contained"} className="w-full">
-                      Start Tracking Your Expense
-                  </Button>
+              <div className={`w-full h-[6%] flex items-center justify-center`}>
+                  <button className={`w-[16%] h-full bg-transparent backdrop-blur-2xl border border-black rounded-xl hover:bg-black hover:text-white shadow-sm`}  onClick={() => navigate("/login", { state: { message: "" }, replace: true })}>
+                      Start Tracking
+                  </button>
               </div>
+          </section>
+          <section className={`h-[100vh] w-screen flex flex-col justify-center items-center`}>
+              features of the app
           </section>
       </>
   )

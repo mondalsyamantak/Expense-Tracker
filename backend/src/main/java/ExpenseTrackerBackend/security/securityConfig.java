@@ -1,5 +1,7 @@
 package ExpenseTrackerBackend.security;
 
+import ExpenseTrackerBackend.service.CustomOAuthUserService;
+import ExpenseTrackerBackend.service.OAuth2Success;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -26,6 +27,13 @@ public class securityConfig {
 
     @Autowired
     private JwtFilter jwtFilter;
+
+    @Autowired
+    private CustomOAuthUserService customOAuthUserService;
+
+    @Autowired
+    private OAuth2Success oAuth2LoginSuccessHandler;
+
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -46,6 +54,11 @@ public class securityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/SignUp","/Login").permitAll().anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuthUserService))
+                        .successHandler(oAuth2LoginSuccessHandler)
+                )
+
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
