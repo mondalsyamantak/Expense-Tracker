@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
 import { Link } from "react-router"
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -11,7 +10,11 @@ export function SignUpForm({
   className,
   ...props
 }) {
-  
+
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+  };
+
   return (
     // <form className={cn("flex flex-col gap-6", className)} {...props}>
     <form className={cn("flex flex-col gap-6", className)} onSubmit={props.onSubmit}>
@@ -49,7 +52,11 @@ export function SignUpForm({
           </span>
         </div>
         <div className="flex flex-col gap-3">
-          <Button variant="outline" className="w-full">
+          <Button
+              variant="outlined"
+              className="w-full flex items-center justify-center gap-2"
+              onClick={handleGoogleLogin}
+          >
             <GoogleIcon fontSize="small"/>
             Login with Google
           </Button>
