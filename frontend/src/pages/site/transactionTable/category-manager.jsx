@@ -71,7 +71,7 @@ function CategoryManager({...props}) {
         </Table>
         </div>
       </CardContent>
-      <CardFooter>
+      <CardFooter className={'mt-auto'}>
         <form 
         onSubmit={handleAddCategory} className='flex w-full justify-end'>
           <Input placeholder=' Add new category'
