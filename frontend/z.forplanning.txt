@@ -22,3 +22,6 @@ Api endpoints that can be added:
 3.GET /stats/category-breakdown?period=this_month   # for pie chart, values for period: this_month, last_month, year, all_time
 4.GET /stats/income-vs-expense?from=2025-01&to=2025-09 # this year or 6 months etc [or all time idk] income vs expense line graph
 5.GET /stats/savings-trend?period=year  # this year or 6 months [or all time idk] savings trend bar/line graph
+
+
+http://localhost:8080/login/oauth2/code/google?state=9d40V2KWb4MCxDZKn3-KzKfUD6z-7E2wPTZkSxf-DQ8%3D&code=4%2F0AVGzR1Awtfs3cRxoY2CgCnFu-UWtWfNhrLu9OnNQTej65jo7c1nnMiALaDeZt9jQVZNwFQ&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=0&prompt=none

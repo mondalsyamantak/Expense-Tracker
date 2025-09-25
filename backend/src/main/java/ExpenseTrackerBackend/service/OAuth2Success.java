@@ -41,5 +41,7 @@ public class OAuth2Success implements AuthenticationSuccessHandler {
         response.setContentType("application/json");
         response.getWriter().write("{\"token\": \"" + token + "\"}");
 
+        response.sendRedirect("http://localhost:5173/oauth2/redirect?token=" + token);
+
     }
 }

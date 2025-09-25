@@ -77,24 +77,6 @@ function Transactions() {
     flex-1 
     p-6 space-y-6
     ">
-      {/* <div className="
-      w-full 
-      xl:flex md:flex-row flex-col flex-nowrap 
-      gap-6
-      hidden
-      "> */}
-        {/* <DataTable columns={columns} className=''/>
-        <CategoryManager className='flex-2 w-full'/> */}
-        {/* <ResizablePanelGroup direction="horizontal" className="h-full gap-5 ">
-          <ResizablePanel defaultSize={80}>
-            <DataTable columns={columns} data={data}/>
-          </ResizablePanel>
-          <ResizableHandle withHandle className="bg-primary"/>
-          <ResizablePanel>
-            <CategoryManager defaultSize={20} />
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </div> */}
 
       <div className="
       w-full 

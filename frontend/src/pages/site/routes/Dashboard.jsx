@@ -14,29 +14,23 @@ function Dashboard() {
   const [piechart2, setPiechart2] = useState(null);
   const [areachart1, setAreachart1] = useState(null);
   useEffect(() => {
-    const res = axios.get('/api/v1/transactions/summary', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    .then(res => setPiechart1(res.data))
-    .catch(err => console.log(err))
-
-    const res2 = axios.get('/api/v1/transactions/summary', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    .then(res => setPiechart2(res.data))
-    .catch(err => console.log(err))
-
-    const res3 = axios.get('/api/v1/transactions/summary', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    .then(res => setAreachart1(res.data))
-    .catch(err => console.log(err))
+    console.log("This is from Dashboard.jsx", localStorage)
+    const url = import.meta.env.VITE_BACKEND;
+    const fetchData = async () => {
+      const res = await axios.get(`${url}/dashboard`, { 
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      .then((res) => 
+      {
+        console.log(res.data.user);
+      })
+      .catch((err)=> {
+        console.log("error: ", err)
+      })
+    }
+    fetchData();
 
   })
   return (

@@ -32,7 +32,9 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { UserRoundCheck, Mail, CheckCheck, Pencil, Trash2, Image } from 'lucide-react'
 import axios from 'axios'
-import { Card } from '@/components/ui/card'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { CardContent } from '@mui/material'
+import { ModeToggle } from '@/components/mode-toggle'
 function Profile() {
   const url = import.meta.env.VITE_BACKEND || 'http://localhost:8080';
   const user = {
@@ -87,21 +89,21 @@ function Profile() {
       flex lg:flex-row flex-col flex-nowrap 
       gap-6">
         {/* <Card className=" items-center flex w-full flex-col p-3 "> */}
-        <Card className="p-6 w-full flex items-center flex-7">
-          <Avatar className="border-green-500 border-2 h-20 w-20 m-3">
+        <Card className="p-6 w-full flex items-center flex-7 h-max">
+          <Avatar className="border-green-500 border-2 h-20 w-20">
             <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <div className="flex-col flex items-center">
-            <h1 className="font-bold">
+          <CardHeader className="justify-center text-center w-full">
+            <CardTitle>
             {user.fullName}
-            </h1>
-            <h2 className="">
-              Productivity enthusiast
-            </h2>
-          </div>
+            </CardTitle>
+            <CardDescription>
+              Free Tier
+            </CardDescription>
+          </CardHeader>
 
-          <div className="mt-6 w-full p-3 flex flex-col ">
+          <CardContent className="w-full p-3 flex flex-col ">
             <div className="w-full flex items-center m-1"> 
               <UserRoundCheck/> 
               <p className="mx-3">Username: {user.username}</p>
@@ -111,8 +113,9 @@ function Profile() {
               <p className="mx-3">Email: {user.email}</p>
             </div>
 
-            {/* Image input section: */}
+            {/* Buttons: */}
             <div className='flex flex-row ml-auto gap-2 mt-5'>
+              {/* Image input section: */}
               <Dialog>
                 <form onSubmit={handleImageUpload}>
                   <DialogTrigger asChild>
@@ -145,7 +148,6 @@ function Profile() {
                   </DialogContent>
                 </form>
               </Dialog>
-
               {/* Edit profile section: */}
               <Dialog>
                 <DialogContent className="sm:max-w-[425px]">
@@ -188,27 +190,71 @@ function Profile() {
                 <DialogTrigger asChild>
                 <Button className="" type="button"><Pencil/>Edit</Button>  
                 </DialogTrigger>
-            </Dialog>
-          </div>
+              </Dialog>
+            </div>
                 
+          {/* Delete account section */}
+          <Button className='bg-red-400 my-4'><Trash2/>Delete account</Button>
+          </CardContent>
+        </Card>
+
+        <Card className="p-6 flex-10">
+          <h1 className="font-bold mb-4">App settings</h1>
+
+          <div className="flex flex-col gap-4">
+            {/* Theme */}
+            <div className="flex justify-between items-center">
+              <p>Theme</p>
+              <ModeToggle className='w-[100px]'/>
+            </div>
+            <Separator />
+
+            {/* Default currency */}
+            <div className="flex justify-between items-center">
+              <p>Default Currency</p>
+              <Button variant="outline" size="sm"><Pencil /> Edit</Button>
+            </div>
+            <Separator />
+
+            {/* Budget limits */}
+            <div className="flex justify-between items-center">
+              <p>Budget Limits</p>
+              <Button variant="outline" size="sm"><Pencil /> Set</Button>
+            </div>
+            <Separator />
+
+            {/* Notifications */}
+            <div className="flex justify-between items-center">
+              <p>Notifications</p>
+              <Button variant="outline" size="sm"><Pencil /> Configure</Button>
+            </div>
+            <Separator />
+
+            {/* Language */}
+            <div className="flex justify-between items-center">
+              <p>Language</p>
+              <Button variant="outline" size="sm"><Pencil /> Change</Button>
+            </div>
+            <Separator />
+
+            {/* Data Export/Import */}
+            <div className="flex justify-between items-center">
+              <p>Data Management</p>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm">Export</Button>
+                <Button variant="outline" size="sm">Import</Button>
+              </div>
+            </div>
+            <Separator />
+
+            {/* Privacy / Terms */}
+            <div className="flex justify-between items-center">
+              <p>Privacy & Terms</p>
+              <Button variant="outline" size="sm"><Pencil /> View</Button>
+            </div>
           </div>
         </Card>
-        <Card className="p-6 flex-10">
-          <h1 className="font-bold">About Me</h1>
-          <div className="flex flex-col">
-          <p>
-          If you need to change the code in sidebar.tsx, you are encouraged to do so. The code is yours. Use sidebar.tsx as a starting point and build your own.
 
-  In the next sections, we'll go over each component and how to use them.
-  SidebarProvider
-
-  The SidebarProvider component is used to provide the sidebar context to the Sidebar component. You should always wrap your application in a SidebarProvider component.
-  Props
-
-          </p>
-          <Button className="ml-auto"><Pencil/></Button>
-        </div>
-        </Card>
       </div>
     </main>
   )

@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
@@ -11,8 +11,10 @@ export function SignUpForm({
   ...props
 }) {
 
+  const navigate = useNavigate();
+
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    navigate("http://localhost:8080/oauth2/authorization/google");
   };
 
   return (
@@ -53,9 +55,9 @@ export function SignUpForm({
         </div>
         <div className="flex flex-col gap-3">
           <Button
-              variant="outlined"
-              className="w-full flex items-center justify-center gap-2"
-              onClick={handleGoogleLogin}
+              variant="outline"
+              className="w-full"
+              onClick={props.handleGoogleLogin}
           >
             <GoogleIcon fontSize="small"/>
             Login with Google
