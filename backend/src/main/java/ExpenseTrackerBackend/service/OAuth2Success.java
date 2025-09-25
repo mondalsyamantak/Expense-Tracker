@@ -20,6 +20,9 @@ public class OAuth2Success implements AuthenticationSuccessHandler {
     private userRepo userRepository;
 
     @Autowired
+    userDataService uDService;
+
+    @Autowired
     private JwtService jwtService; // assumes you already have a JWT service
 
     @Override
@@ -35,6 +38,8 @@ public class OAuth2Success implements AuthenticationSuccessHandler {
         User user = userRepository.findByUserName(name).orElseGet(() -> {
             User newUser = new User();
             newUser.setUserName(name);
+            uDService.createUserData(newUser);
+
             return userRepository.save(newUser);
         });
         String token = jwtService.generateToken(user.getUserName(),user.getUserId());
