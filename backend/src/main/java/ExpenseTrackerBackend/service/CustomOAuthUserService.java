@@ -14,6 +14,9 @@ public class CustomOAuthUserService extends DefaultOAuth2UserService {
     @Autowired
     private userRepo userRepository;
 
+    @Autowired
+    userDataService uDService;
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
@@ -26,6 +29,7 @@ public class CustomOAuthUserService extends DefaultOAuth2UserService {
             User newUser = new User();
             newUser.setEmail(email);
             newUser.setUserName(name);
+            uDService.createUserData(newUser);
             return userRepository.save(newUser);
         });
 
