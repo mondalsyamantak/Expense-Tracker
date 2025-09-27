@@ -53,8 +53,6 @@ export default function LoginPage() {
 
     if (res?.status == 200) {
       
-
-      console.log("res has been recieved okay?", res)
       localStorage.setItem("token", res.data);
       navigate("/app", {
         state: {
@@ -64,6 +62,10 @@ export default function LoginPage() {
     }
 
   }
+
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+  };
 
 
   return (
@@ -83,7 +85,7 @@ export default function LoginPage() {
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
             <Toaster richColors/>
-            <LoginForm onSubmit={handleSubmit} />
+            <LoginForm onSubmit={handleSubmit} handleGoogleLogin={handleGoogleLogin} />
           </div>
         </div>
       </div>

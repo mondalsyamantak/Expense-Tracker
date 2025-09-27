@@ -49,8 +49,8 @@ const data = {
       icon: PieChart,
     },
     {
-      name: "Expenses",
-      url: "/app",
+      name: "Budgets",
+      url: "/app/budgets",
       icon: Map,
     },
   ],

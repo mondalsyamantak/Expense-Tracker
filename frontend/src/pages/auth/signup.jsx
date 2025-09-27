@@ -23,26 +23,17 @@ export default function SignUpPage() {
       },
       data: data
     })
-    .then((res) => {
-      console.log(res.status)
-      if (res.status == 200) toast.success("Account created successfully, please log into your account")
-      navigate("/login", {
-        state: {
-          message: "SignUp successful",
-        }
-      })
-    }) //====> [remove this line]
     .catch(err => console.log(err));
     //[show the error in a sonner/toast message]
 
-    // if (res.status == 200) {
-    //   // navigate("/login", {
-    //   //   state: {
-    //   //     message: "Signup successful please login",
-    //   //   }
-    //   // })
-    //   toast.success("signed up successfully")
-    // }
+    if (res?.status == 200) {
+      localStorage.setItem("token", res.data);
+      navigate("/app", {
+        state: {
+          message: "Account creation successful",
+        }
+      })
+    }
     console.log(res.status)
 
     
@@ -52,24 +43,6 @@ export default function SignUpPage() {
     window.location.href = "http://localhost:8080/oauth2/authorization/google";
   };
 
-  const handleGoogleLogin1 = async () => {
-    // console.log("button clicked but lets see")
-    try {
-      const res = await axios.get("http://localhost:8080/oauth2/authorization/google", {
-      });
-      const token = res.data.token;
-      if (token) {
-        localStorage.setItem("token", token);
-        // window.location.href = "/app";  // redirect to app
-        navigate(`${url}/app`);
-        console.log("login successful ig, heres the token:", localStorage.getItem("token"));
-      } else {
-        console.error("No token received");
-      }
-    } catch (err) {
-      console.error("OAuth login failed", err);
-    }
-  };
   
 
   return (

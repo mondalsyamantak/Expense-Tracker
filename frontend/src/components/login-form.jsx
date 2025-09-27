@@ -45,7 +45,11 @@ export function LoginForm({
           </span>
         </div>
         <div className="flex flex-col gap-3">
-          <Button variant="outline" className="w-full">
+          <Button 
+          variant="outline" 
+          className="w-full"
+          onClick={props.handleGoogleLogin}
+          >
             <GoogleIcon fontSize="small"/>
             Login with Google
           </Button>
