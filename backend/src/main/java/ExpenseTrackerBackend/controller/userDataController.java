@@ -21,9 +21,13 @@ public class userDataController {
     @Autowired
     JwtService jwtService;
 
+
+    //Very important code
     private String getUserId(HttpServletRequest request){
         return jwtService.extractUserId(request.getHeader("Authorization").substring(7));
     }
+
+
     //For basic data
     @GetMapping("/basicData")
     public Map<String,String> basicData(HttpServletRequest request){
