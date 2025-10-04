@@ -53,7 +53,7 @@ public class chartDataController {
     }
 
     @GetMapping("/transaction")
-    public Set<Transaction> transaction(HttpServletRequest request){
+    public List<Transaction> transaction(HttpServletRequest request){
         String userID = getUserId(request);
         return dataService.findUser(userID).getTransactionHistory();
     }

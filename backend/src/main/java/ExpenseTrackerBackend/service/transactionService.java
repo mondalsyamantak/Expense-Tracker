@@ -1,13 +1,13 @@
 package ExpenseTrackerBackend.service;
 
 import ExpenseTrackerBackend.model.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
 public class transactionService {
-
 
     public Transaction createTransaction(Map<String, String> body){
         Transaction transaction = new Transaction();
