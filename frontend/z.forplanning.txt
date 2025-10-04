@@ -25,3 +25,87 @@ Api endpoints that can be added:
 
 
 http://localhost:8080/login/oauth2/code/google?state=9d40V2KWb4MCxDZKn3-KzKfUD6z-7E2wPTZkSxf-DQ8%3D&code=4%2F0AVGzR1Awtfs3cRxoY2CgCnFu-UWtWfNhrLu9OnNQTej65jo7c1nnMiALaDeZt9jQVZNwFQ&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=0&prompt=none
+
+
+
+
+
+
+
+
+
+
+
+
+<Dialog>
+            <DialogTrigger asChild>
+              <Button><Plus/>Add Transaction Data</Button>
+            </DialogTrigger>
+
+            <DialogContent className="sm:max-w-[425px]">
+            <form 
+            onSubmit={handleAddTransaction}
+            className="m-0 p-0 flex flex-col gap-4"
+            >
+              <DialogHeader>
+                <DialogTitle>Add Transaction Data</DialogTitle>
+                <DialogDescription>
+                  Fill in the requirements to add new transaction data into the table
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4">
+                <div className="grid gap-3">
+                  <Label htmlFor="amount">Amount (in rupees)</Label>
+                  <Input id="amount" name="amount" type='number' required />
+                </div>
+                <div className="grid gap-3">
+                  <Label htmlFor="description">Short Note:</Label>
+                  <Input id="description" name="description" required />
+                </div>
+                <div className="
+                  grid grid-cols-2 grid-rows-2 grid-flow-col 
+                  gap-x-3 
+                ">
+
+                  <Label htmlFor="type">Payment method:</Label>
+                  <Select name="type" id="type" required>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Method" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="UPI">UPI</SelectItem>
+                      <SelectItem value="Cash">Cash</SelectItem>
+                      <SelectItem value="Card">Card</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Label htmlFor="expenseType">Category</Label>
+                  <Select name="expenseType" id="expenseType" required>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {/* <SelectItem value="category1">Sample Category 1</SelectItem>
+                      <SelectItem value="category2 ">Sample Category 2</SelectItem>
+                      <SelectItem value="category3">Sample Category 3</SelectItem> */}
+                      { (user.categories != []) ?
+                          user.categories.map((category) => (
+                          <SelectItem key={category} value={category}>{category}</SelectItem>
+                        ))
+                        :
+                        <div>No category available</div>
+                      }
+                    </SelectContent>
+                  </Select>
+
+                </div>
+              </div>
+              <DialogFooter className="mt-4">
+                <DialogClose asChild>
+                  <Button variant="outline">Cancel</Button>
+                </DialogClose>
+                  <Button type="submit">Save changes</Button>
+              </DialogFooter>
+            </form>
+            </DialogContent>
+        </Dialog>

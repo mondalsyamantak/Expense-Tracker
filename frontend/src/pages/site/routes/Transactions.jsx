@@ -45,7 +45,7 @@ function Transactions() {
     .then (res => 
     {
       setData(res.data);
-      console.log(res.data);
+      console.log("transaction data: ",res.data);
       let categories = [];
       for(const entry of res.data){
         const category = entry["expenseType"];
