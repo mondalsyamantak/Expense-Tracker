@@ -88,7 +88,7 @@ public class userDataService {
             if (transaction.getTransactionID().equals(body.get("transactionID"))) {
                 transaction.setAmount(Integer.parseInt(body.get("amount")));
                 transaction.setExpenseType(body.get("expenseType"));
-                transaction.setExpenseType(body.get("type"));
+                transaction.setType(body.get("type"));
                 fetchedUser.setTransactionHistory(transactionHistory);
                 repo.save(fetchedUser);
                 break;
