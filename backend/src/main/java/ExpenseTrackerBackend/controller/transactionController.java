@@ -42,4 +42,15 @@ public class transactionController {
         return service.updateTransaction(userID,body); // returns the list of transactions
     }
 
+    // send the jwt token and in the request body
+    //transactionID
+    //amount
+    //expenseType
+    //type
+    @PostMapping("/deleteTransaction")
+    public List<Transaction> deleteOneTransaction(HttpServletRequest request, @RequestBody Map<String, String> body) {
+        String userID = getUserId(request);
+        return service.deleteTransaction(userID,body); // deletes transactions
+    }
+
 }

@@ -19,6 +19,9 @@ public class userDataService {
     @Autowired
     transactionService tservice;
 
+    @Autowired
+    userDataRepo repo;
+
     public void createUserData(User user) {
         UserData userData = new UserData();
         userData.setUser(user);
@@ -86,6 +89,21 @@ public class userDataService {
                 transaction.setAmount(Integer.parseInt(body.get("amount")));
                 transaction.setExpenseType(body.get("expenseType"));
                 transaction.setExpenseType(body.get("type"));
+                fetchedUser.setTransactionHistory(transactionHistory);
+                repo.save(fetchedUser);
+                break;
+            }
+        }
+        return transactionHistory;
+    }
+    public List<Transaction> deleteTransaction(String userID,Map<String, String> body) {
+        UserData fetchedUser = findUser(userID);
+        List<Transaction> transactionHistory = fetchedUser.getTransactionHistory();
+        for (Transaction transaction : transactionHistory) {
+            if (transaction.getTransactionID().equals(body.get("transactionID"))) {
+                transactionHistory.remove(transaction);
+                fetchedUser.setTransactionHistory(transactionHistory);
+                repo.save(fetchedUser);
                 break;
             }
         }

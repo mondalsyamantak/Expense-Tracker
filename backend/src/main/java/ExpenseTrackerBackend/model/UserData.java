@@ -83,4 +83,8 @@ public class UserData {
             return expense;
         }else throw new RuntimeException("Expense defined properly");
     }
+
+    public void setTransactionHistory(List<Transaction> transactionHistory) {
+        this.transactionHistory = transactionHistory;
+    }
 }
