@@ -96,7 +96,7 @@ export const columns = [
   {
     id: "edit",
     cell: ({ row }) => {
-      const payment = row.original
+      const payment = row.original;
  
       return (
         // <DropdownMenu>
@@ -118,7 +118,7 @@ export const columns = [
         //     <DropdownMenuItem>View payment details</DropdownMenuItem>
         //   </DropdownMenuContent>
         // </DropdownMenu>
-        <EditTransaction values={payment}/>
+        <EditTransaction values={row.original}/>
       )
     },
   },
@@ -129,23 +129,29 @@ function EditTransaction({values}) {
 
   const {register, handleSubmit, control} = useForm({
     defaultValues: {
+      "amount": values.amount,
       "type": values.type,
-      "expenseType": values.expenseType
+      "expenseType": values.expenseType,
+      "description": values.description,
+      "transactionID": values.transactionID,
     }
   });
   const {user, setUser} = useGlobal();
   const url = import.meta.env.VITE_BACKEND;
 
-  const handleEdit = async (e) => {
-    e.transactionID=values.transactionID;
-    console.log(e);
+  const handleEdit = async (data) => {
+    // e.transactionID=values.transactionID;
+    console.log("initial values:", values);
+    data.amount = Number(data.amount);
+    
+    console.log("object being submitted", data);
 
     const req = await axios(`${url}/updateTransaction`,  {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      data: e
+      data: data
     })
     .then ((res) => { 
       console.log(res);
@@ -153,13 +159,13 @@ function EditTransaction({values}) {
       toast.success("Edited transaction successfully");
     })
     .catch((err) => console.log(err));
-    // toast.success("Edited transaction successfully");
+    toast.success("Edited transaction successfully");
   }
   return (
     <Dialog>
       <form 
       onSubmit={handleSubmit(handleEdit)}
-      id="editTransactionForm"
+      id={values.transactionID}
       >
         <DialogTrigger asChild>
           <Button variant="ghost"><Pencil/></Button>
@@ -175,7 +181,7 @@ function EditTransaction({values}) {
           <div className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="name-1">Amount (in rupees)</Label>
-              <Input id="name-1" defaultValue={values.amount} {...register("amount")} required />
+              <Input id="name-1" type='number' defaultValue={values.amount} {...register("amount")} required />
             </div>
             <div className="grid gap-3">
               <Label htmlFor="username-1">Short Note</Label>
@@ -268,7 +274,7 @@ function EditTransaction({values}) {
             </DialogClose>
             <Button
               type="submit"
-              form="editTransactionForm" 
+              form={values.transactionID}
             >Save changes</Button>
           </DialogFooter>
         </DialogContent>
