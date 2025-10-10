@@ -62,15 +62,15 @@ public class userDataService {
         Transaction t = tservice.createTransaction(body);
         switch (t.getType()) {
             case "UPI" -> {
-                fetchedUser.setUpiTransaction(t.getAmount());
+                fetchedUser.setUpiTransaction(fetchedUser.getUpiTransaction() + t.getAmount());
                 fetchedUser.setTransactionHistory(t);
             }
             case "Cash" -> {
-                fetchedUser.setCashTransaction(t.getAmount());
+                fetchedUser.setCashTransaction(fetchedUser.getCashTransaction() + t.getAmount());
                 fetchedUser.setTransactionHistory(t);
             }
             case "Card" -> {
-                fetchedUser.setCardTransaction(t.getAmount());
+                fetchedUser.setCardTransaction(fetchedUser.getCardTransaction() + t.getAmount());
                 fetchedUser.setTransactionHistory(t);
             }
             case null, default -> {
@@ -78,22 +78,15 @@ public class userDataService {
             }
         }
         fetchedUser.setExpense(t.getExpenseType(), t.getAmount());
+        fetchedUser.setTotalExpense(fetchedUser.getCardTransaction() + fetchedUser.getCashTransaction() + fetchedUser.getUpiTransaction());
         return dao.save(fetchedUser);
     }
 
     public List<Transaction> updateTransaction(String userID,Map<String, String> body) {
         UserData fetchedUser = findUser(userID);
         List<Transaction> transactionHistory = fetchedUser.getTransactionHistory();
-        for (Transaction transaction : transactionHistory) {
-            if (transaction.getTransactionID().equals(body.get("transactionID"))) {
-                transaction.setAmount(Integer.parseInt(body.get("amount")));
-                transaction.setExpenseType(body.get("expenseType"));
-                transaction.setType(body.get("type"));
-                fetchedUser.setTransactionHistory(transactionHistory);
-                repo.save(fetchedUser);
-                break;
-            }
-        }
+        deleteTransaction(userID,body);
+        addTransaction(userID,body);
         return transactionHistory;
     }
     public List<Transaction> deleteTransaction(String userID,Map<String, String> body) {
@@ -101,8 +94,17 @@ public class userDataService {
         List<Transaction> transactionHistory = fetchedUser.getTransactionHistory();
         for (Transaction transaction : transactionHistory) {
             if (transaction.getTransactionID().equals(body.get("transactionID"))) {
-                transactionHistory.remove(transaction);
                 fetchedUser.setTransactionHistory(transactionHistory);
+
+                switch (transaction.getType()) {
+                    case "UPI" -> fetchedUser.setUpiTransaction(fetchedUser.getUpiTransaction() - transaction.getAmount());
+                    case "Card" -> fetchedUser.setCardTransaction(fetchedUser.getCardTransaction() - transaction.getAmount());
+                    case "Cash" -> fetchedUser.setCashTransaction(fetchedUser.getCashTransaction() - transaction.getAmount());
+                    default -> {return null;}
+                }
+
+                fetchedUser.setTotalExpense(fetchedUser.getCardTransaction() + fetchedUser.getCashTransaction() + fetchedUser.getUpiTransaction());
+                transactionHistory.remove(transaction);
                 repo.save(fetchedUser);
                 break;
             }

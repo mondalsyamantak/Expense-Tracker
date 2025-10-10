@@ -10,29 +10,30 @@ import axios from 'axios'
 import { ChartAreaAxes } from '../components/chart-area-axes'
 
 function Dashboard() {
-  const [piechart1, setPiechart1] = useState(null);
-  const [piechart2, setPiechart2] = useState(null);
-  const [areachart1, setAreachart1] = useState(null);
+  const url = import.meta.env.VITE_BACKEND;
+  // const [piechart1, setPiechart1] = useState(null);
+  // const [piechart2, setPiechart2] = useState(null);
+  // const [areachart1, setAreachart1] = useState(null);
+  const [totalExpense, setTotalExpense] = useState(0);
+
   useEffect(() => {
-    console.log("This is from Dashboard.jsx", localStorage)
-    const url = import.meta.env.VITE_BACKEND;
     const fetchData = async () => {
-      const res = await axios.get(`${url}/dashboard`, { 
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
-      .then((res) => 
-      {
-        console.log(res.data.user);
-      })
-      .catch((err)=> {
-        console.log("error: ", err)
-      })
+      try {
+        const res = await axios.get(`${url}/dashboard`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+        console.log("User object:", res.data);
+        console.log("Total Expense:", res.data.totalExpense);
+        setTotalExpense(res.data.totalExpense);
+      } catch (err) {
+        console.error("Error:", err);
+      }
     }
     fetchData();
+  }, []);
 
-  })
   return (
       <main className="
       flex-1 
@@ -47,19 +48,19 @@ function Dashboard() {
         <Card className="">
           <CardHeader>
             <CardDescription>Total Balance:</CardDescription>
-            <CardTitle className="font-bold text-2xl">₹12,540</CardTitle>
+            <CardTitle className="font-bold text-2xl">Fetch from budget</CardTitle>
           </CardHeader>
         </Card>
         <Card className="">
           <CardHeader>
             <CardDescription>Income this month:</CardDescription>
-            <CardTitle className="font-bold text-2xl text-green-400">₹12,540</CardTitle>
+            <CardTitle className="font-bold text-2xl text-green-400">Fetch from budget</CardTitle>
           </CardHeader>
         </Card>
         <Card className="">
           <CardHeader>
             <CardDescription>Expense this month:</CardDescription>
-            <CardTitle className="font-bold text-2xl text-rose-400">₹12,540</CardTitle>
+            <CardTitle className="font-bold text-2xl text-rose-400">₹{totalExpense}</CardTitle>
           </CardHeader>
         </Card>
         <Card className="">

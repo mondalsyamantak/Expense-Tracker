@@ -46,7 +46,7 @@ function Transactions() {
     {
       setData(res.data);
       console.log("transaction data: ",res.data);
-      let categories = [];
+      let categories = ["Travel","Food"];
       for(const entry of res.data){
         const category = entry["expenseType"];
         if (!categories.includes(category)){

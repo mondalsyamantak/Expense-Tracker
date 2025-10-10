@@ -39,10 +39,8 @@ public class chartDataController {
                 .sorted(Comparator.comparing(Transaction::getDate).reversed())
                 .limit(10)
                 .collect(Collectors.toList());
-
         fetchedUser.getTransactionHistory().clear();
         fetchedUser.getTransactionHistory().addAll(EditedTransactionHistory);
-
         return fetchedUser;
     }
 
@@ -50,6 +48,11 @@ public class chartDataController {
     public Map<String, Integer> pieChart(HttpServletRequest request) {
         String userID = getUserId(request);
         return dataService.findUser(userID).getExpense();
+    }
+    @GetMapping("/totalEnpense")
+    public int totalExpense(HttpServletRequest request) {
+        String userID = getUserId(request);
+        return dataService.findUser(userID).getTotalExpense();
     }
 
     @GetMapping("/transaction")
