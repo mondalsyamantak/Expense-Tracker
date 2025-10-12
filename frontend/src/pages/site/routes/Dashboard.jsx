@@ -77,12 +77,12 @@ function Dashboard() {
       grid-cols-1 lg:grid-cols-2 
       gap-6
       ">
-      <ChartPieLabel/>
+        <ChartPieLabel/>
       {/* <ChartPieLabel2/> */}
-      <ChartAreaGradient/>
+        <ChartPieLabel/>
       {/* <ChartAreaAxes/> */}
-      <ChartAreaGradient2/>
-      <Card>
+        <ChartAreaGradient/>
+        <Card>
         <CardHeader>
           <CardTitle>Recent Transactions</CardTitle>
           <CardDescription>A list of your recent invoices</CardDescription>

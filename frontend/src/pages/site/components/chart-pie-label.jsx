@@ -105,7 +105,7 @@ export function ChartPieLabel() {
       <CardHeader className="items-center pb-0 flex">
         <CardTitle className='flex flex-col gap-2'>
           <p>Expense Breakdown</p>
-          <CardDescription>;insert date here;</CardDescription>
+          <CardDescription>Expenditure data based on category</CardDescription>
         </CardTitle>
         
         <Select defaultValue="thismonth">

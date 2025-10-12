@@ -67,8 +67,8 @@ public class UserData {
 
     public UserData(){
         totalExpense = 0;
-        expense.put("travelExpense",0);
-        expense.put("foodExpense",0);
+//        expense.put("Travel",0);
+//        expense.put("Food",0);
     }
 
     public void setTransactionHistory(Transaction transaction) {

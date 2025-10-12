@@ -103,6 +103,9 @@ public class userDataService {
                     default -> {return null;}
                 }
 
+                if (fetchedUser.getExpense().containsKey(transaction.getExpenseType())){
+                    fetchedUser.getExpense().put(transaction.getExpenseType(), fetchedUser.getExpense().get(transaction.getExpenseType()) - transaction.getAmount());
+                }
                 fetchedUser.setTotalExpense(fetchedUser.getCardTransaction() + fetchedUser.getCashTransaction() + fetchedUser.getUpiTransaction());
                 transactionHistory.remove(transaction);
                 repo.save(fetchedUser);
