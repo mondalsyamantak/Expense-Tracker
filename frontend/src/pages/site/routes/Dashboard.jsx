@@ -8,6 +8,9 @@ import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/com
 import TableDashboard from '../components/table-dashboard'
 import axios from 'axios'
 import { ChartAreaAxes } from '../components/chart-area-axes'
+import {ChartPieLabel2} from "@/pages/site/components/chart-pie-label2.jsx";
+import {columns} from "@/pages/site/transactionTable/columns.jsx";
+import {DataTable} from "@/pages/site/transactionTable/data-table.jsx";
 
 function Dashboard() {
   const url = import.meta.env.VITE_BACKEND;
@@ -15,6 +18,7 @@ function Dashboard() {
   // const [piechart2, setPiechart2] = useState(null);
   // const [areachart1, setAreachart1] = useState(null);
   const [totalExpense, setTotalExpense] = useState(0);
+  const [transactionHistory, setTransactionHistory] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +31,7 @@ function Dashboard() {
         console.log("User object:", res.data);
         console.log("Total Expense:", res.data.totalExpense);
         setTotalExpense(res.data.totalExpense);
+        setTransactionHistory(res.data.transactionHistory);
       } catch (err) {
         console.error("Error:", err);
       }
@@ -79,7 +84,7 @@ function Dashboard() {
       ">
         <ChartPieLabel/>
       {/* <ChartPieLabel2/> */}
-        <ChartPieLabel/>
+        <ChartPieLabel2/>
       {/* <ChartAreaAxes/> */}
         <ChartAreaGradient/>
         <Card>
@@ -87,9 +92,9 @@ function Dashboard() {
           <CardTitle>Recent Transactions</CardTitle>
           <CardDescription>A list of your recent invoices</CardDescription>
         </CardHeader>
-        <CardContent>
-          <TableDashboard/>
-        </CardContent>
+        {/*<CardContent>*/}
+        {/*  <DataTable columns={columns} className='' data={transactionHistory} fetchData={fetchData}/>*/}
+        {/*</CardContent>*/}
       </Card>
       </div>
 
