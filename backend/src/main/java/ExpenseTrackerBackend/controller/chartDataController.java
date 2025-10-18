@@ -67,4 +67,6 @@ public class chartDataController {
         String userID = getUserId(request);
         return dataService.findUser(userID).getTransactionHistory();
     }
+
+
 }

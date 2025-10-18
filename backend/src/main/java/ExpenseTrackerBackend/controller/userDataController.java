@@ -1,15 +1,16 @@
 package ExpenseTrackerBackend.controller;
 
 import ExpenseTrackerBackend.model.UserData;
-import ExpenseTrackerBackend.repo.userDataRepo;
 import ExpenseTrackerBackend.service.JwtService;
 import ExpenseTrackerBackend.service.userDataService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -60,7 +61,10 @@ public class userDataController {
 
     }
 
-//    @PostMapping("/setProfilePic")
-//    public String setProfilePic(@RequestBody ){}
+    @PostMapping("/setProfilePic")
+    public String setProfilePic(HttpServletRequest request,@RequestParam("file") MultipartFile file) throws IOException {
+        String userID = getUserId(request);
+        return service.setProfilePic(userID,file);
+    }
 
 }

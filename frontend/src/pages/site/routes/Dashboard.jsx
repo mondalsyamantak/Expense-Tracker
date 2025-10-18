@@ -87,15 +87,7 @@ function Dashboard() {
         <ChartPieLabel2/>
       {/* <ChartAreaAxes/> */}
         <ChartAreaGradient/>
-        <Card>
-        <CardHeader>
-          <CardTitle>Recent Transactions</CardTitle>
-          <CardDescription>A list of your recent invoices</CardDescription>
-        </CardHeader>
-        {/*<CardContent>*/}
-        {/*  <DataTable columns={columns} className='' data={transactionHistory} fetchData={fetchData}/>*/}
-        {/*</CardContent>*/}
-      </Card>
+        <DataTable columns={columns} className='' data={transactionHistory}/>
       </div>
 
       {/* What else should I add here?  */}
