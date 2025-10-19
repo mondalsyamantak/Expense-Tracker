@@ -35,15 +35,17 @@ import axios from 'axios'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { CardContent } from '@mui/material'
 import { ModeToggle } from '@/components/mode-toggle'
+import { useGlobal } from '@/globalProviders/GlobalContext'
 function Profile() {
   const url = import.meta.env.VITE_BACKEND || 'http://localhost:8080';
-  const user = {
-    fullName: "Sample Name",
-    username: "sample-username",
-    email: "sample-email",
-    todoList: []
+  // const user = {
+  //   fullName: "Sample Name",
+  //   username: "sample-username",
+  //   email: "sample-email",
+  //   todoList: []
 
-  }
+  // }
+  const {user, setUser} = useGlobal();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -96,7 +98,7 @@ function Profile() {
           </Avatar>
           <CardHeader className="justify-center text-center w-full">
             <CardTitle>
-            {user.fullName}
+            {user.displayName}
             </CardTitle>
             <CardDescription>
               Free Tier
@@ -106,11 +108,11 @@ function Profile() {
           <CardContent className="w-full p-3 flex flex-col ">
             <div className="w-full flex items-center m-1"> 
               <UserRoundCheck/> 
-              <p className="mx-3">Username: {user.username}</p>
+              <p className="mx-3">Username: {user.user.userName}</p>
             </div>
             <div className="w-full flex items-center m-1"> 
               <Mail/> 
-              <p className="mx-3">Email: {user.email}</p>
+              <p className="mx-3">Email: {user.user.email}</p>
             </div>
 
             {/* Buttons: */}
