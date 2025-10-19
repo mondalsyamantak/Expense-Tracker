@@ -30,6 +30,7 @@ import {
 import { Link } from "react-router"
 import { Skeleton } from "./ui/skeleton"
 import axios from "axios"
+import { useGlobal } from "@/globalProviders/GlobalContext"
 
 const data = {
   user: {
@@ -61,7 +62,6 @@ export function AppSidebar({
 }) {
 
   const [user, setUserdata] = React.useState(null);
-  const [basicData, setBasicData] = React.useState(null);
   const url = import.meta.env.VITE_BACKEND;
   
   React.useEffect(() => {
@@ -74,7 +74,6 @@ export function AppSidebar({
       .then((res) => 
       {
         setUserdata(res.data.user);
-        setBasicData(res)
         console.log(res.data.user);
       })
       .catch((err)=> {
@@ -82,9 +81,9 @@ export function AppSidebar({
       })
     }
 
-    fetchUserData();
+  //   fetchUserData();
 
-  }, [])
+  // }, [])
 
   
   return (
@@ -113,7 +112,7 @@ export function AppSidebar({
         {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} basicData={basicData} />
+        <NavUser user={props.user.user} basicData={basicData} />
       </SidebarFooter>
     </Sidebar>
   );

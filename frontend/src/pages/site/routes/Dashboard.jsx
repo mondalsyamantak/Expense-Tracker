@@ -11,6 +11,7 @@ import { ChartAreaAxes } from '../components/chart-area-axes'
 import {ChartPieLabel2} from "@/pages/site/components/chart-pie-label2.jsx";
 import {columns} from "@/pages/site/transactionTable/columns.jsx";
 import {DataTable} from "@/pages/site/transactionTable/data-table.jsx";
+import { useGlobal } from '@/globalProviders/GlobalContext'
 
 function Dashboard() {
   const url = import.meta.env.VITE_BACKEND;
@@ -20,24 +21,36 @@ function Dashboard() {
   const [totalExpense, setTotalExpense] = useState(0);
   const [transactionHistory, setTransactionHistory] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`${url}/dashboard`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
-          }
-        });
-        console.log("User object:", res.data);
-        console.log("Total Expense:", res.data.totalExpense);
-        setTotalExpense(res.data.totalExpense);
-        setTransactionHistory(res.data.transactionHistory);
-      } catch (err) {
-        console.error("Error:", err);
-      }
-    }
-    fetchData();
-  }, []);
+  const {user, setUser} = useGlobal();
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await axios.get(`${url}/dashboard`, {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`
+  //         }
+  //       });
+  //       console.log("User object:", res.data);
+  //       console.log("Total Expense:", res.data.totalExpense);
+  //       setTotalExpense(res.data.totalExpense);
+  //       setTransactionHistory(res.data.transactionHistory);
+  //     } catch (err) {
+  //       console.error("Error:", err);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
+
+  // useEffect(() => {
+  //   if (user) {
+
+  //   }
+  // }, [])
+
+  if (!user) return (
+    <div className='p-6 flex justify-center items-center h-full w-full'> Loading...</div>
+  )
 
   return (
       <main className="
@@ -65,7 +78,7 @@ function Dashboard() {
         <Card className="">
           <CardHeader>
             <CardDescription>Expense this month:</CardDescription>
-            <CardTitle className="font-bold text-2xl text-rose-400">₹{totalExpense}</CardTitle>
+            <CardTitle className="font-bold text-2xl text-rose-400">₹{user.totalExpense}</CardTitle>
           </CardHeader>
         </Card>
         <Card className="">
@@ -87,7 +100,7 @@ function Dashboard() {
         <ChartPieLabel2/>
       {/* <ChartAreaAxes/> */}
         <ChartAreaGradient/>
-        <DataTable columns={columns} className='' data={transactionHistory}/>
+        <DataTable columns={columns} className='' data={user.transactionHistory}/>
       </div>
 
       {/* What else should I add here?  */}
