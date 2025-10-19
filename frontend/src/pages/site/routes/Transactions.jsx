@@ -45,6 +45,8 @@ function Transactions() {
     .then (res => 
     {
       setData(res.data);
+      setUser({...user, transactionHistory: res.data});
+      console.log("VERY IMPORTANT: USER DATA:", user)
       console.log("transaction data: ",res.data);
       let categories = ["Travel","Food"];
       for(const entry of res.data){

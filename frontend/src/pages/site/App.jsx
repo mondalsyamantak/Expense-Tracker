@@ -30,6 +30,7 @@ import { Outlet, useLocation, useNavigate } from "react-router"
 import { toast, Toaster } from "sonner"
 import { ModeToggle } from "@/components/mode-toggle"
 import axios from "axios"
+import { useGlobal } from "@/globalProviders/GlobalContext"
 
 export default function Page() {
 
@@ -37,9 +38,31 @@ export default function Page() {
   const path = location.pathname.replace(/\/$/, "");
   const url = import.meta.env.VITE_BACKEND;
   const navigate = useNavigate();
-  const [user, setUserdata] = useState(null)
+  // const [user, setUserdata] = useState(null)
+
+  const {user, setUser} = useGlobal();
 
   useEffect( () => {
+
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${url}/dashboard`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+        // console.log("User object:", res.data);
+        // console.log("Total Expense:", res.data.totalExpense);
+        // setTotalExpense(res.data.totalExpense);
+        // setTransactionHistory(res.data.transactionHistory);
+        setUser(res.data);
+
+      } catch (err) {
+        console.error("Error:", err);
+      }
+    }
+
+    fetchData();
     
     if (location.state && location.state.message) {
       // Display the message as a toast notification
@@ -56,10 +79,18 @@ export default function Page() {
         replace: true
       })
     }
+
+
   }, [])
+
+  if (!user) return (
+
+    <div className="p-6 flex items-center justify-center h-screen w-screen">Loading...</div>
+  )
   return (
     <SidebarProvider>
-      <AppSidebar />
+      {/* {console.error(user)} */}
+      <AppSidebar user={user}/>
       <SidebarInset>
         <Toaster richColors />
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
