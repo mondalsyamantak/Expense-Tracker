@@ -60,10 +60,10 @@ const data = {
 export function AppSidebar({
   ...props
 }) {
-
   const [user, setUserdata] = React.useState(null);
   const url = import.meta.env.VITE_BACKEND;
-  
+  const [basicData, setBasicData] = React.useState(null);
+
   React.useEffect(() => {
     const fetchUserData = async () => {
       const res = await axios.get(`${url}/dashboard`, { 
@@ -74,6 +74,7 @@ export function AppSidebar({
       .then((res) => 
       {
         setUserdata(res.data.user);
+        setBasicData(res);
         console.log(res.data.user);
       })
       .catch((err)=> {
@@ -81,9 +82,9 @@ export function AppSidebar({
       })
     }
 
-  //   fetchUserData();
+    fetchUserData();
 
-  // }, [])
+  }, [])
 
   
   return (
