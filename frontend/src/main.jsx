@@ -12,7 +12,7 @@ import Dashboard from './pages/site/routes/Dashboard'
 import Transactions from './pages/site/routes/Transactions'
 import { ThemeProvider } from './globalProviders/ThemeProvider'
 import OAuth2RedirectHandler from './pages/auth/OAuth2RedirectHandler/OAuth2RedirectHandler'
-import Budgets from './pages/site/routes/Budgets'
+import Budgets from './pages/site/routes/Budgets/Budgets'
 // import { SignUpPage } from './pages/auth/signup.jsx'
 // import { LoginForm } from './components/login-form.jsx'
 
