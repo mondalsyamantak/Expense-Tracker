@@ -9,8 +9,8 @@ import TableDashboard from '../components/table-dashboard'
 import axios from 'axios'
 import { ChartAreaAxes } from '../components/chart-area-axes'
 import {ChartPieLabel2} from "@/pages/site/components/chart-pie-label2.jsx";
-import {columns} from "@/pages/site/transactionTable/columns.jsx";
-import {DataTable} from "@/pages/site/transactionTable/data-table.jsx";
+import {columns} from "@/pages/site/routes/Transactions/transactionTable/columns.jsx";
+import {DataTable} from "@/pages/site/routes/Transactions/transactionTable/data-table.jsx";
 import { useGlobal } from '@/globalProviders/GlobalContext'
 
 function Dashboard() {

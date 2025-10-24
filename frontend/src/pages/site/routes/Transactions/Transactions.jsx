@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from 'react'
-import { DataTable } from '../transactionTable/data-table'
-import {columns} from '../transactionTable/columns'
+import { DataTable } from './transactionTable/data-table'
+import {columns} from './transactionTable/columns'
 import axios from 'axios';
 import { Skeleton } from '@/components/ui/skeleton';
-import CategoryManager from '../transactionTable/category-manager';
+import CategoryManager from './transactionTable/category-manager';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/resizable"
 import { GripVertical } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import AddTransactions from '../transactionTable/add-transactions';
+import AddTransactions from './transactionTable/add-transactions';
 import { useGlobal } from '@/globalProviders/GlobalContext';
 
 export const payments= [
