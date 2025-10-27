@@ -30,7 +30,11 @@ public class UserData {
 
     @Getter
     @Setter
-    private long income;
+    private long totalIncome;
+
+    @Getter
+    @ElementCollection
+    private List<IncomeSource> incomeSources = new ArrayList<>();
 
     @Getter
     @Setter
@@ -90,5 +94,9 @@ public class UserData {
 
     public void setTransactionHistory(List<Transaction> transactionHistory) {
         this.transactionHistory = transactionHistory;
+    }
+
+    public void setIncomeSource(IncomeSource incomeSource) {
+        this.incomeSources.add(incomeSource);
     }
 }

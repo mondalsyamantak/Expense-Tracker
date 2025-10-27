@@ -1,5 +1,6 @@
 package ExpenseTrackerBackend.service;
 
+import ExpenseTrackerBackend.model.IncomeSource;
 import ExpenseTrackerBackend.model.Transaction;
 import ExpenseTrackerBackend.model.User;
 import ExpenseTrackerBackend.model.UserData;
@@ -24,7 +25,7 @@ public class userDataService {
     transactionService tservice;
 
     @Autowired
-    userDataRepo repo;
+    incomeService incomeService;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -124,10 +125,28 @@ public class userDataService {
                 }
                 fetchedUser.setTotalExpense(fetchedUser.getCardTransaction() + fetchedUser.getCashTransaction() + fetchedUser.getUpiTransaction());
                 transactionHistory.remove(transaction);
-                repo.save(fetchedUser);
+                dao.save(fetchedUser);
                 break;
             }
         }
         return transactionHistory;
     }
+
+    // adds income source to the userData
+    public IncomeSource createIncomeSource(String userID, Map<String, String> body) {
+        IncomeSource incomeSource = incomeService.createIncomeSource(body);
+        UserData fetchedUser = findUser(userID);
+        fetchedUser.setTotalIncome(fetchedUser.getTotalIncome() +  incomeSource.getAmount());
+        fetchedUser.setIncomeSource(incomeSource);
+        dao.save(fetchedUser);
+        return incomeSource;
+    }
+
+//    public List<IncomeSource> deleteIncomeSource(String userID, Map<String, String> body) {
+//        //adding later
+//    }
+//
+//    public List<IncomeSource> updateIncomeSource(String userID, Map<String, String> body) {
+//        //adding later
+//    }
 }
