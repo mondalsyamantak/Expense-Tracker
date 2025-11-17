@@ -6,7 +6,7 @@ const GlobalContext = createContext(null);
 
 // 2. Create a provider component
 export function GlobalProvider({ children }) {
-  const [user, setUser] = useState({categories: JSON.parse(localStorage.getItem("categories")) || []}); 
+  const [user, setUser] = useState({}); 
 
   return (
     <GlobalContext.Provider value={{ user, setUser }}>

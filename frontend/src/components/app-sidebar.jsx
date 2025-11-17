@@ -66,20 +66,20 @@ export function AppSidebar({
 
   React.useEffect(() => {
     const fetchUserData = async () => {
-      const res = await axios.get(`${url}/dashboard`, { 
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
-      .then((res) => 
-      {
-        setUserdata(res.data.user);
-        setBasicData(res);
-        console.log(res.data.user);
-      })
-      .catch((err)=> {
-        console.log("error: ", err)
-      })
+      // const res = await axios.get(`${url}/dashboard`, { 
+      //   headers: {
+      //     Authorization: `Bearer ${localStorage.getItem("token")}`
+      //   }
+      // })
+      // .then((res) => 
+      // {
+      //   setUserdata(res.data.user);
+      //   setBasicData(res);
+      //   console.log(res.data.user);
+      // })
+      // .catch((err)=> {
+      //   console.log("error: ", err)
+      // })
     }
 
     fetchUserData();
@@ -113,7 +113,7 @@ export function AppSidebar({
         {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={props.user.user} basicData={basicData} />
+        <NavUser user={props.user.user} basicData={props.user} />
       </SidebarFooter>
     </Sidebar>
   );

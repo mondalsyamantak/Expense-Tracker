@@ -55,7 +55,10 @@ export default function Page() {
         // console.log("Total Expense:", res.data.totalExpense);
         // setTotalExpense(res.data.totalExpense);
         // setTransactionHistory(res.data.transactionHistory);
-        setUser(res.data);
+        setUser(
+          {...res.data,
+            categories: JSON.parse(localStorage.getItem("categories")) || []
+          });
 
       } catch (err) {
         console.error("Error:", err);
@@ -83,7 +86,7 @@ export default function Page() {
 
   }, [])
 
-  if (!user) return (
+  if (Object.keys(user).length === 0) return (
 
     <div className="p-6 flex items-center justify-center h-screen w-screen">Loading...</div>
   )
