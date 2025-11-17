@@ -16,7 +16,7 @@ export default function AddIncome({fetchData, ...props}) {
 
   const url = import.meta.env.VITE_BACKEND;
 
-  const handleAddTransaction = async (e) => {
+  const handleAddIncome = async (e) => {
     // Logic to add a new transaction
     e.preventDefault();
     console.log(localStorage)
@@ -49,7 +49,7 @@ export default function AddIncome({fetchData, ...props}) {
       <CardContent>
               <Toaster richColors/>
           <form 
-            onSubmit={handleAddTransaction}
+            onSubmit={handleAddIncome}
             className="m-0 p-0 flex flex-col gap-4"
             >
               <div className="grid gap-4">
@@ -67,34 +67,16 @@ export default function AddIncome({fetchData, ...props}) {
                   mb-2
                 ">
 
-                  <Label htmlFor="type">Payment method:</Label>
-                  <Select name="type" id="type" required>
+                  <Label htmlFor="type">Recurring Type:</Label>
+                  <Select name="recurringType" id="recurringType" required>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Method" />
+                      <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="UPI">UPI</SelectItem>
-                      <SelectItem value="Cash">Cash</SelectItem>
-                      <SelectItem value="Card">Card</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Label htmlFor="expenseType">Category</Label>
-                  <Select name="expenseType" id="expenseType" required>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {/* <SelectItem value="category1">Sample Category 1</SelectItem>
-                      <SelectItem value="category2 ">Sample Category 2</SelectItem>
-                      <SelectItem value="category3">Sample Category 3</SelectItem> */}
-                      { (user.categories != []) ?
-                          user.categories.map((category) => (
-                          <SelectItem key={category} value={category}>{category}</SelectItem>
-                        ))
-                        :
-                        <div>No category available</div>
-                      }
+                      <SelectItem value="Single">single</SelectItem>
+                      <SelectItem value="Weekly">weekly</SelectItem>
+                      <SelectItem value="Monthly">monthly</SelectItem>
+                      <SelectItem value="Yearly">yearly</SelectItem>
                     </SelectContent>
                   </Select>
 

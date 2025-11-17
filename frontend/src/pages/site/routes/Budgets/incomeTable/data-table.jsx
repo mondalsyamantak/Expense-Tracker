@@ -69,28 +69,6 @@ export function DataTable({
 
   
 
-  const handleAddTransaction = async (e) => {
-    // Logic to add a new transaction
-    e.preventDefault();
-    console.log(localStorage)
-    const formData = new FormData(e.target);
-    const formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj);
-    formDataObj.amount = Number(formDataObj.amount);
-    const req = await axios(`${url}/transaction`,  {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      data: formDataObj
-    })
-    .then ((res) => { 
-      console.log(res);
-      fetchData();
-    })
-    .catch((err) => console.log(err));
-  }
-
   const table = useReactTable({
     data,
     columns,
@@ -131,7 +109,7 @@ export function DataTable({
   return (
     <Card {...props} className="" >
       <CardHeader>
-        <CardTitle className="">Transactions Table</CardTitle>
+        <CardTitle className="">Income Table</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center mb-4 ">

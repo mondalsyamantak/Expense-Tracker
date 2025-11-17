@@ -37,29 +37,32 @@ export default function Budgets() {
 
   const fetchData = async () => {
     console.log("I AM A FUNCTION")
-    const req = await axios.get(`${url}/transaction`, {
+    const req = await axios.get(`${url}/dashboard`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       }
     })
     .then (res => 
     {
-      setData(res.data);
-      setUser({...user, transactionHistory: res.data});
-      console.log("VERY IMPORTANT: USER DATA:", user)
-      console.log("transaction data: ",res.data);
-      let categories = ["Travel","Food"];
-      for(const entry of res.data){
-        const category = entry["expenseType"];
-        if (!categories.includes(category)){
-          categories.push(category);
-        }
-      }
-      console.log("After saving, categories are: ",categories);
+      setData(res.data.income);
+      //setUser({...user, transactionHistory: res.data});
+      
+      setUser(res.data);
+      console.log("VERY IMPORTANT: USER DATA:", res.data)
+      console.log("income data: ",res.data.income);
 
-      localStorage.setItem("categories", JSON.stringify(categories));
-      setUser({...user, categories: categories});
-      console.log("categories redone: ", user.categories);
+      // let categories = ["Travel","Food"];
+      // for(const entry of res.data){
+      //   const category = entry["expenseType"];
+      //   if (!categories.includes(category)){
+      //     categories.push(category);
+      //   }
+      // }
+      // console.log("After saving, categories are: ",categories);
+
+      // localStorage.setItem("categories", JSON.stringify(categories));
+      // setUser({...user, categories: categories});
+      // console.log("categories redone: ", user.categories);
     })
     .catch (err => console.log(err));
   }
@@ -86,10 +89,11 @@ export default function Budgets() {
       gap-6
       ">
         <div className='flex md:flex-row flex-col gap-6 w-full'>
-        <AddIncome fetchData={fetchData} className='lg:flex-10 flex-7'/><CategoryManager className='md:flex hidden w-full flex-6'/>
+        <AddIncome fetchData={fetchData} className='lg:flex-10 flex-7'/>
+        {/* <CategoryManager className='md:flex hidden w-full flex-6'/> */}
         </div>
         <DataTable columns={columns} className='' data={data} fetchData={fetchData}/>
-        <CategoryManager className='flex md:hidden'/>
+        {/* <CategoryManager className='flex md:hidden'/> */}
         
       </div>
     </main>

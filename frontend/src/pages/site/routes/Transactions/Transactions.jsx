@@ -9,7 +9,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-import { GripVertical } from 'lucide-react';
+import { GripVertical, LoaderCircle } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import AddTransactions from './transactionTable/add-transactions';
 import { useGlobal } from '@/globalProviders/GlobalContext';
@@ -70,7 +70,7 @@ function Transactions() {
 
   if (data == null) {
     return (
-      <div>Loading</div>
+      <div className='w-full h-full flex justify-center items-center'><LoaderCircle className='animate-spin'/></div>
     )
   }
   
