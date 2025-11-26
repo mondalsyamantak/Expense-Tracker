@@ -11,6 +11,7 @@ import java.util.*;
 public class UserData {
 
     @Id
+    @Getter
     private String id;
 
     @OneToOne
@@ -30,7 +31,7 @@ public class UserData {
 
     @Getter
     @Setter
-    private long totalIncome;
+    private long income;
 
     @Getter
     @ElementCollection
@@ -75,7 +76,7 @@ public class UserData {
 //        expense.put("Food",0);
     }
 
-    public void setTransactionHistory(Transaction transaction) {
+    public void addTransactionHistory(Transaction transaction) {
         transactionHistory.add(transaction);
     }
 

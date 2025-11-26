@@ -7,8 +7,10 @@ import ExpenseTrackerBackend.model.UserData;
 import ExpenseTrackerBackend.repo.userDataRepo;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +27,7 @@ public class userDataService {
     transactionService tservice;
 
     @Autowired
-    incomeService incomeService;
+    incomeService inService;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -37,11 +39,27 @@ public class userDataService {
         dao.save(userData);
     }
 
+    @Transactional
+    @Cacheable(value = "userData", key = "#userID")
     public UserData findUser(String userID) {
-        return dao.findById(userID).orElse(null);
+        System.out.println("🚀 DB CALLED : " + userID);
+        UserData fetchedUser = dao.findById(userID).orElse(null);
+        assert fetchedUser != null;
+        fetchedUser.getTransactionHistory().size();
+        return fetchedUser;
     }
 
+//    public UserDataDTO findUser(String userID) {
+//        UserData fetchedUser = dao.findById(userID)
+//                .orElse(null);
+//
+//        fetchedUser.getTransactionHistory().size();
+//
+//        return new UserDataDTO(fetchedUser.getId(), fetchedUser.getTransactionHistory());
+//    }
+
     //profile picture,display name,
+    @CachePut(value = "users", key = "#userID")
     public Map<String, String> getBasicData(String userID) {
         Map<String, String> basicUserData = new HashMap<>();
         UserData fetchedUser = findUser(userID);
@@ -80,15 +98,15 @@ public class userDataService {
         switch (t.getType()) {
             case "UPI" -> {
                 fetchedUser.setUpiTransaction(fetchedUser.getUpiTransaction() + t.getAmount());
-                fetchedUser.setTransactionHistory(t);
+                fetchedUser.addTransactionHistory(t);
             }
             case "Cash" -> {
                 fetchedUser.setCashTransaction(fetchedUser.getCashTransaction() + t.getAmount());
-                fetchedUser.setTransactionHistory(t);
+                fetchedUser.addTransactionHistory(t);
             }
             case "Card" -> {
                 fetchedUser.setCardTransaction(fetchedUser.getCardTransaction() + t.getAmount());
-                fetchedUser.setTransactionHistory(t);
+                fetchedUser.addTransactionHistory(t);
             }
             case null, default -> {
                 return null;
@@ -134,9 +152,9 @@ public class userDataService {
 
     // adds income source to the userData
     public IncomeSource createIncomeSource(String userID, Map<String, String> body) {
-        IncomeSource incomeSource = incomeService.createIncomeSource(body);
+        IncomeSource incomeSource = inService.createIncomeSource(body);
         UserData fetchedUser = findUser(userID);
-        fetchedUser.setTotalIncome(fetchedUser.getTotalIncome() +  incomeSource.getAmount());
+        fetchedUser.setIncome(fetchedUser.getIncome() +  incomeSource.getAmount());
         fetchedUser.setIncomeSource(incomeSource);
         dao.save(fetchedUser);
         return incomeSource;

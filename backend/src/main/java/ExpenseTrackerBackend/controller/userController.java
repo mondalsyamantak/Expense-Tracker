@@ -29,8 +29,4 @@ public class userController {
         return uService.login(user.getUserName(),user.getPassword());
     }
 
-    @GetMapping("/Testing")
-    public String testing(){
-        return "wroking";
-    }
 }

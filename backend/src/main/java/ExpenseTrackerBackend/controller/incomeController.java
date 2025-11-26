@@ -23,7 +23,7 @@ public class incomeController {
     JwtService jwtService;
 
     @Autowired
-    incomeService incomeService;
+    incomeService inService;
     @Autowired
     private userDataService service;
 

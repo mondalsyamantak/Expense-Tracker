@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -30,15 +29,15 @@ public class chartDataController {
     @GetMapping("/dashboard")
     public UserData dashboard(HttpServletRequest request){
         String userID = getUserId(request);
-        UserData fetchedUser = dataService.findUser(userID);
-        List<Transaction> EditedTransactionHistory = fetchedUser.getTransactionHistory()
-                .stream()
-                .sorted(Comparator.comparing(Transaction::getDate).reversed())
-                .limit(10)
-                .collect(Collectors.toList());
-        fetchedUser.getTransactionHistory().clear();
-        fetchedUser.getTransactionHistory().addAll(EditedTransactionHistory);
-        return fetchedUser;
+        return dataService.findUser(userID);
+//        UserData copy = fetchedUser;
+//        List<Transaction> EditedTransactionHistory = copy.getTransactionHistory()
+//                .stream()
+//                .sorted(Comparator.comparing(Transaction::getDate).reversed())
+//                .limit(10)
+//                .collect(Collectors.toList());
+//        copy.getTransactionHistory().clear();
+//        copy.getTransactionHistory().addAll(EditedTransactionHistory);
     }
 
     @GetMapping("/pieChart")

@@ -3,20 +3,22 @@ package ExpenseTrackerBackend.model;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 @Scope("prototype")
 @Embeddable
 public class IncomeSource {
     @Getter
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String incomeID;
+
     @Getter
     @Setter
     private int amount;
@@ -34,4 +36,11 @@ public class IncomeSource {
     @Getter
     @Setter
     private String description;
+
+    @PrePersist
+    public void prePersist() {
+        if (incomeID == null) {
+            incomeID = UUID.randomUUID().toString();
+        }
+    }
 }

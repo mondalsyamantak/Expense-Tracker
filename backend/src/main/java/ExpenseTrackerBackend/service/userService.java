@@ -39,18 +39,6 @@ public class userService {
             return "Username already exists!";
         }
     }
-    public User createUser(String username) {
-        if (userDAO.findByUserName(username).isEmpty()){
-            User user = new User();
-            user.setUserName(username);
-            user.setPassword(null);
-            userDAO.save(user);
-            userDataService.createUserData(user);
-            return user;
-        } else {
-            return null;
-        }
-    }
 
     public String login(String userName,String password) {
         Authentication authentication =  authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, password));
