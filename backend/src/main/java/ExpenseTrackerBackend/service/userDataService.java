@@ -1,12 +1,13 @@
 package ExpenseTrackerBackend.service;
 
+import ExpenseTrackerBackend.model.IncomeSource;
 import ExpenseTrackerBackend.model.Transaction;
 import ExpenseTrackerBackend.model.User;
 import ExpenseTrackerBackend.model.UserData;
 import ExpenseTrackerBackend.repo.userDataRepo;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +25,7 @@ public class userDataService {
     transactionService tservice;
 
     @Autowired
-    userDataRepo repo;
+    incomeService inService;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -36,11 +37,16 @@ public class userDataService {
         dao.save(userData);
     }
 
+    @Transactional
     public UserData findUser(String userID) {
-        return dao.findById(userID).orElse(null);
+        System.out.println("🚀 DB CALLED : " + userID);
+        UserData fetchedUser = dao.findById(userID).orElse(null);
+        assert fetchedUser != null;
+        fetchedUser.getTransactionHistory().size();
+        return fetchedUser;
     }
 
-    //profile picture,display name,
+    //profile picture,display name
     public Map<String, String> getBasicData(String userID) {
         Map<String, String> basicUserData = new HashMap<>();
         UserData fetchedUser = findUser(userID);
@@ -52,7 +58,7 @@ public class userDataService {
         return basicUserData;
     }
 
-    public String setProfilePic(String userID,MultipartFile file) throws IOException {
+    public String setProfilePic(String userID, MultipartFile file) throws IOException {
         UserData fetchedUser = findUser(userID);
         Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
         String imageUrl = (String) uploadResult.get("secure_url");
@@ -79,15 +85,15 @@ public class userDataService {
         switch (t.getType()) {
             case "UPI" -> {
                 fetchedUser.setUpiTransaction(fetchedUser.getUpiTransaction() + t.getAmount());
-                fetchedUser.setTransactionHistory(t);
+                fetchedUser.addTransactionHistory(t);
             }
             case "Cash" -> {
                 fetchedUser.setCashTransaction(fetchedUser.getCashTransaction() + t.getAmount());
-                fetchedUser.setTransactionHistory(t);
+                fetchedUser.addTransactionHistory(t);
             }
             case "Card" -> {
                 fetchedUser.setCardTransaction(fetchedUser.getCardTransaction() + t.getAmount());
-                fetchedUser.setTransactionHistory(t);
+                fetchedUser.addTransactionHistory(t);
             }
             case null, default -> {
                 return null;
@@ -98,14 +104,15 @@ public class userDataService {
         return dao.save(fetchedUser);
     }
 
-    public List<Transaction> updateTransaction(String userID,Map<String, String> body) {
+    public List<Transaction> updateTransaction(String userID, Map<String, String> body) {
         UserData fetchedUser = findUser(userID);
         List<Transaction> transactionHistory = fetchedUser.getTransactionHistory();
-        deleteTransaction(userID,body);
-        addTransaction(userID,body);
+        deleteTransaction(userID, body);
+        addTransaction(userID, body);
         return transactionHistory;
     }
-    public List<Transaction> deleteTransaction(String userID,Map<String, String> body) {
+
+    public List<Transaction> deleteTransaction(String userID, Map<String, String> body) {
         UserData fetchedUser = findUser(userID);
         List<Transaction> transactionHistory = fetchedUser.getTransactionHistory();
         for (Transaction transaction : transactionHistory) {
@@ -124,10 +131,25 @@ public class userDataService {
                 }
                 fetchedUser.setTotalExpense(fetchedUser.getCardTransaction() + fetchedUser.getCashTransaction() + fetchedUser.getUpiTransaction());
                 transactionHistory.remove(transaction);
-                repo.save(fetchedUser);
+                dao.save(fetchedUser);
                 break;
             }
         }
         return transactionHistory;
     }
+
+    // adds income source to the userData
+    public IncomeSource createIncomeSource(String userID, Map<String, String> body) {
+        IncomeSource incomeSource = inService.createIncomeSource(body);
+        UserData fetchedUser = findUser(userID);
+        fetchedUser.setIncome(fetchedUser.getIncome() +  incomeSource.getAmount());
+        fetchedUser.setIncomeSource(incomeSource);
+        dao.save(fetchedUser);
+        return incomeSource;
+    }
+
+//    public List<IncomeSource> updateIncomeSource(String userID, Map<String, String> body) {
+//        UserData fetchedUser = findUser(userID);
+//        IncomeSource = fetchedUser.getIncomeSources(body.get("incomeId"));
+//    }
 }

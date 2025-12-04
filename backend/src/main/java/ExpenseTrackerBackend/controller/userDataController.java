@@ -5,7 +5,6 @@ import ExpenseTrackerBackend.service.JwtService;
 import ExpenseTrackerBackend.service.userDataService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +32,7 @@ public class userDataController {
     @GetMapping("/basicData")
     public Map<String,String> basicData(HttpServletRequest request){
         String userID = getUserId(request);
-        return service.getBasicData(userID);
+        return (Map<String, String>) service.getBasicData(userID);
     }
 
     @PostMapping("/DisplayName")

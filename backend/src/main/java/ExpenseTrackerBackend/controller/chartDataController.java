@@ -1,6 +1,5 @@
 package ExpenseTrackerBackend.controller;
 
-
 import ExpenseTrackerBackend.model.Transaction;
 import ExpenseTrackerBackend.model.UserData;
 import ExpenseTrackerBackend.service.JwtService;
@@ -16,56 +15,53 @@ import java.util.*;
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 public class chartDataController {
+
     @Autowired
     userDataService dataService;
 
     @Autowired
     JwtService jwtService;
 
-    private String getUserId(HttpServletRequest request){
-        return jwtService.extractUserId(request.getHeader("Authorization").substring(7));
+    private String getUserId(HttpServletRequest request) {
+        return jwtService.extractUserId(
+                request.getHeader("Authorization").substring(7)
+        );
     }
 
     @GetMapping("/dashboard")
-    public UserData dashboard(HttpServletRequest request){
+    public UserData dashboard(HttpServletRequest request) {
         String userID = getUserId(request);
         return dataService.findUser(userID);
-//        UserData copy = fetchedUser;
-//        List<Transaction> EditedTransactionHistory = copy.getTransactionHistory()
-//                .stream()
-//                .sorted(Comparator.comparing(Transaction::getDate).reversed())
-//                .limit(10)
-//                .collect(Collectors.toList());
-//        copy.getTransactionHistory().clear();
-//        copy.getTransactionHistory().addAll(EditedTransactionHistory);
     }
 
     @GetMapping("/pieChart")
-    public Map<String, Integer> pieChart(HttpServletRequest request) {
+    public Map<String, Integer> pieChart(HttpServletRequest request)
+    {
         String userID = getUserId(request);
         return dataService.findUser(userID).getExpense();
     }
+
     @GetMapping("/pieChart2")
     public List<Integer> pieChart2(HttpServletRequest request) {
         String userID = getUserId(request);
-        List<Integer> cardCashUpi = new ArrayList<>();
-        UserData fetchedUser = dataService.findUser(userID);
-        cardCashUpi.add(fetchedUser.getCardTransaction());
-        cardCashUpi.add(fetchedUser.getCashTransaction());
-        cardCashUpi.add(fetchedUser.getUpiTransaction());
-        return cardCashUpi;
+        UserData user = dataService.findUser(userID);
+
+        return List.of(
+                user.getCardTransaction(),
+                user.getCashTransaction(),
+                user.getUpiTransaction()
+        );
     }
-    @GetMapping("/totalEnpense")
-    public int totalExpense(HttpServletRequest request) {
+
+    @GetMapping("/totalExpense")
+    public double totalExpense(HttpServletRequest request) {
         String userID = getUserId(request);
         return dataService.findUser(userID).getTotalExpense();
     }
 
     @GetMapping("/transaction")
-    public List<Transaction> transaction(HttpServletRequest request){
+    public List<Transaction> transaction(HttpServletRequest request) {
         String userID = getUserId(request);
         return dataService.findUser(userID).getTransactionHistory();
     }
-
-
 }

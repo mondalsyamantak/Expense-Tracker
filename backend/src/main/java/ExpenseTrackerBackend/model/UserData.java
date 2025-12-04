@@ -11,6 +11,7 @@ import java.util.*;
 public class UserData {
 
     @Id
+    @Getter
     private String id;
 
     @OneToOne
@@ -31,6 +32,10 @@ public class UserData {
     @Getter
     @Setter
     private long income;
+
+    @Getter
+    @ElementCollection
+    private List<IncomeSource> incomeSources = new ArrayList<>();
 
     @Getter
     @Setter
@@ -71,7 +76,7 @@ public class UserData {
 //        expense.put("Food",0);
     }
 
-    public void setTransactionHistory(Transaction transaction) {
+    public void addTransactionHistory(Transaction transaction) {
         transactionHistory.add(transaction);
     }
 
@@ -90,5 +95,9 @@ public class UserData {
 
     public void setTransactionHistory(List<Transaction> transactionHistory) {
         this.transactionHistory = transactionHistory;
+    }
+
+    public void setIncomeSource(IncomeSource incomeSource) {
+        this.incomeSources.add(incomeSource);
     }
 }

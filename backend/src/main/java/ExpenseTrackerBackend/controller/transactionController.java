@@ -39,7 +39,7 @@ public class transactionController {
     @PostMapping("/updateTransaction")
     public List<Transaction> updateTransaction(HttpServletRequest request, @RequestBody Map<String, String> body) {
         String userID = getUserId(request);
-        return service.updateTransaction(userID,body); // returns the list of transactions
+        return (List<Transaction>) service.updateTransaction(userID,body); // returns the list of transactions
     }
 
     // send the jwt token and in the request body
@@ -50,7 +50,7 @@ public class transactionController {
     @PostMapping("/deleteTransaction")
     public List<Transaction> deleteOneTransaction(HttpServletRequest request, @RequestBody Map<String, String> body) {
         String userID = getUserId(request);
-        return service.deleteTransaction(userID,body); // deletes transactions
+        return (List<Transaction>) service.deleteTransaction(userID,body); // deletes transactions
     }
 
 }
