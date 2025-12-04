@@ -1,16 +1,13 @@
 package ExpenseTrackerBackend.service;
 
-import ExpenseTrackerBackend.model.IncomeSource;
 import ExpenseTrackerBackend.model.Transaction;
 import ExpenseTrackerBackend.model.User;
 import ExpenseTrackerBackend.model.UserData;
 import ExpenseTrackerBackend.repo.userDataRepo;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import jakarta.transaction.Transactional;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +24,7 @@ public class userDataService {
     transactionService tservice;
 
     @Autowired
-    incomeService inService;
+    userDataRepo repo;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -39,27 +36,11 @@ public class userDataService {
         dao.save(userData);
     }
 
-    @Transactional
-    @Cacheable(value = "userData", key = "#userID")
     public UserData findUser(String userID) {
-        System.out.println("🚀 DB CALLED : " + userID);
-        UserData fetchedUser = dao.findById(userID).orElse(null);
-        assert fetchedUser != null;
-        fetchedUser.getTransactionHistory().size();
-        return fetchedUser;
+        return dao.findById(userID).orElse(null);
     }
 
-//    public UserDataDTO findUser(String userID) {
-//        UserData fetchedUser = dao.findById(userID)
-//                .orElse(null);
-//
-//        fetchedUser.getTransactionHistory().size();
-//
-//        return new UserDataDTO(fetchedUser.getId(), fetchedUser.getTransactionHistory());
-//    }
-
     //profile picture,display name,
-    @CachePut(value = "users", key = "#userID")
     public Map<String, String> getBasicData(String userID) {
         Map<String, String> basicUserData = new HashMap<>();
         UserData fetchedUser = findUser(userID);
@@ -98,15 +79,15 @@ public class userDataService {
         switch (t.getType()) {
             case "UPI" -> {
                 fetchedUser.setUpiTransaction(fetchedUser.getUpiTransaction() + t.getAmount());
-                fetchedUser.addTransactionHistory(t);
+                fetchedUser.setTransactionHistory(t);
             }
             case "Cash" -> {
                 fetchedUser.setCashTransaction(fetchedUser.getCashTransaction() + t.getAmount());
-                fetchedUser.addTransactionHistory(t);
+                fetchedUser.setTransactionHistory(t);
             }
             case "Card" -> {
                 fetchedUser.setCardTransaction(fetchedUser.getCardTransaction() + t.getAmount());
-                fetchedUser.addTransactionHistory(t);
+                fetchedUser.setTransactionHistory(t);
             }
             case null, default -> {
                 return null;
@@ -143,28 +124,10 @@ public class userDataService {
                 }
                 fetchedUser.setTotalExpense(fetchedUser.getCardTransaction() + fetchedUser.getCashTransaction() + fetchedUser.getUpiTransaction());
                 transactionHistory.remove(transaction);
-                dao.save(fetchedUser);
+                repo.save(fetchedUser);
                 break;
             }
         }
         return transactionHistory;
     }
-
-    // adds income source to the userData
-    public IncomeSource createIncomeSource(String userID, Map<String, String> body) {
-        IncomeSource incomeSource = inService.createIncomeSource(body);
-        UserData fetchedUser = findUser(userID);
-        fetchedUser.setIncome(fetchedUser.getIncome() +  incomeSource.getAmount());
-        fetchedUser.setIncomeSource(incomeSource);
-        dao.save(fetchedUser);
-        return incomeSource;
-    }
-
-//    public List<IncomeSource> deleteIncomeSource(String userID, Map<String, String> body) {
-//        //adding later
-//    }
-//
-//    public List<IncomeSource> updateIncomeSource(String userID, Map<String, String> body) {
-//        //adding later
-//    }
 }
