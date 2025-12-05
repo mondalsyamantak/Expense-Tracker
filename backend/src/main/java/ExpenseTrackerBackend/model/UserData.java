@@ -31,11 +31,11 @@ public class UserData {
 
     @Getter
     @Setter
-    private long income;
+    private int income;
 
     @Getter
     @ElementCollection
-    private List<IncomeSource> incomeSources = new ArrayList<>();
+    private Map<String,IncomeSource> incomeSources = new HashMap<>();
 
     @Getter
     @Setter
@@ -72,6 +72,7 @@ public class UserData {
 
     public UserData(){
         totalExpense = 0;
+        income = 0;
 //        expense.put("Travel",0);
 //        expense.put("Food",0);
     }
@@ -98,6 +99,6 @@ public class UserData {
     }
 
     public void setIncomeSource(IncomeSource incomeSource) {
-        this.incomeSources.add(incomeSource);
+        this.incomeSources.put(incomeSource.getIncomeID(),incomeSource);
     }
 }

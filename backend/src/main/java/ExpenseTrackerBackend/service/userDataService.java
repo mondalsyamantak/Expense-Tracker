@@ -41,8 +41,6 @@ public class userDataService {
     public UserData findUser(String userID) {
         System.out.println("🚀 DB CALLED : " + userID);
         UserData fetchedUser = dao.findById(userID).orElse(null);
-        assert fetchedUser != null;
-        fetchedUser.getTransactionHistory().size();
         return fetchedUser;
     }
 
@@ -144,12 +142,31 @@ public class userDataService {
         UserData fetchedUser = findUser(userID);
         fetchedUser.setIncome(fetchedUser.getIncome() +  incomeSource.getAmount());
         fetchedUser.setIncomeSource(incomeSource);
+        fetchedUser.setIncome(fetchedUser.getIncome() +  incomeSource.getAmount());
         dao.save(fetchedUser);
         return incomeSource;
     }
 
-//    public List<IncomeSource> updateIncomeSource(String userID, Map<String, String> body) {
-//        UserData fetchedUser = findUser(userID);
-//        IncomeSource = fetchedUser.getIncomeSources(body.get("incomeId"));
-//    }
+    public IncomeSource deleteIncomeSource(String userID, Map<String, String> body) {
+        UserData fetchedUser = findUser(userID);
+        IncomeSource incomeSource = fetchedUser.getIncomeSources().remove(body
+                .get("incomeSourceID"));
+        fetchedUser.setIncome(fetchedUser.getIncome() - incomeSource.getAmount());
+        dao.save(fetchedUser);
+        return incomeSource;
+    }
+
+    public Map<String,IncomeSource> updateIncomeSource(String userID, Map<String, String> body) {
+        UserData fetchedUser = findUser(userID);
+        IncomeSource incomeSource = fetchedUser.getIncomeSources().remove(body
+                .get("incomeSourceID"));
+        fetchedUser.setIncome(fetchedUser.getIncome() - incomeSource.getAmount());
+        incomeSource.setIncomeName(body.get("incomeName"));
+        incomeSource.setDescription(body.get("incomeDescription"));
+        incomeSource.setAmount(Integer.parseInt(body.get("amount")));
+        incomeSource.setRecurringType(body.get("recurringType"));
+        fetchedUser.getIncomeSources().put(body.get("incomeSourceID"), incomeSource);
+        dao.save(fetchedUser);
+        return fetchedUser.getIncomeSources();
+    }
 }

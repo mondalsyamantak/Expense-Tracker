@@ -37,21 +37,21 @@ public class incomeController {
         return service.createIncomeSource(userID,body);
     }
 
-//    @PostMapping("/updateIncomeSource")
-//    public List<IncomeSource> updateTransaction(HttpServletRequest request, @RequestBody Map<String, String> body) {
-//        String userID = getUserId(request);
-//        return service.updateIncomeSource(userID,body); // returns the list of transactions
-//    }
-//
-//    // send the jwt token and in the request body
-//    //incomeID
-//    //amount
-//    //type
-//    //etc
-//    @PostMapping("/deleteTransaction")
-//    public List<IncomeSource> deleteOneIncomeSource(HttpServletRequest request, @RequestBody Map<String, String> body) {
-//        String userID = getUserId(request);
-//        return service.deleteIncomeSource(userID,body); // deletes transactions
-//    }
+    @PostMapping("/updateIncomeSource")
+    public Map<String,IncomeSource> updateTransaction(HttpServletRequest request, @RequestBody Map<String, String> body) {
+        String userID = getUserId(request);
+        return service.updateIncomeSource(userID,body); // returns the list of transactions
+    }
+
+    // send the jwt token and in the request body
+    //incomeID
+    //amount
+    //type
+    //etc
+    @PostMapping("/deleteIncomeTransaction")
+    public IncomeSource deleteOneIncomeSource(HttpServletRequest request, @RequestBody Map<String, String> body) {
+        String userID = getUserId(request);
+        return service.deleteIncomeSource(userID,body); // deletes transactions
+    }
 
 }
