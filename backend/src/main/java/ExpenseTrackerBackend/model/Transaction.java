@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.UUID;
 
-@Component
-@Scope("prototype")
 @Embeddable
 public class Transaction {
     @Getter

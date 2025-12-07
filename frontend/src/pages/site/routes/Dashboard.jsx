@@ -72,7 +72,7 @@ function Dashboard() {
         <Card className="">
           <CardHeader>
             <CardDescription>Income this month:</CardDescription>
-            <CardTitle className="font-bold text-2xl text-green-400">Fetch from budget</CardTitle>
+            <CardTitle className="font-bold text-2xl text-green-400">{user.income}</CardTitle>
           </CardHeader>
         </Card>
         <Card className="">
@@ -83,8 +83,8 @@ function Dashboard() {
         </Card>
         <Card className="">
           <CardHeader>
-            <CardDescription>Random useful data:</CardDescription>
-            <CardTitle className="font-bold text-2xl text-blue-400">79%</CardTitle>
+            <CardDescription>Savings:</CardDescription>
+            <CardTitle className="font-bold text-2xl text-blue-400">{(((user.income)-(user.totalExpense))/(user.income))*100}%</CardTitle>
           </CardHeader>
         </Card>
       </div>

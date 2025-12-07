@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
@@ -37,11 +39,41 @@ public class userDataService {
         dao.save(userData);
     }
 
-    @Transactional
+    private UserData updateUserData(UserData fetchedUser){
+        Map<String, IncomeSource> fetchedIncomeSource = fetchedUser.getIncomeSources();
+        LocalDate today = LocalDate.now();
+
+        for (IncomeSource value : fetchedIncomeSource.values()) {
+
+            LocalDate incomeDate = value.getUpdateDate(); // last time it was updated
+            long diff = switch (value.getRecurringType()) {
+                case "Daily" -> ChronoUnit.DAYS.between(incomeDate, today);
+                case "Monthly" -> ChronoUnit.MONTHS.between(incomeDate, today);
+                case "Yearly" -> ChronoUnit.YEARS.between(incomeDate, today);
+                default -> 0;
+            };
+
+            if (diff > 1) {
+                long newAmount = value.getAmount() + (diff * value.getAmount());
+                value.setAmount((int) newAmount);
+                value.setUpdateDate(today); // update date so it doesn’t multiply again next time
+            }
+        }
+        return fetchedUser;
+    }
+
+
     public UserData findUser(String userID) {
         System.out.println("🚀 DB CALLED : " + userID);
         UserData fetchedUser = dao.findById(userID).orElse(null);
-        return fetchedUser;
+        UserData finalFU = null;
+        try {
+            assert fetchedUser != null;
+            finalFU = dao.save(updateUserData(fetchedUser));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return finalFU;
     }
 
     //profile picture,display name

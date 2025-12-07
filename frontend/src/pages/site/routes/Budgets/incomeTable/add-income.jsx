@@ -24,7 +24,7 @@ export default function AddIncome({fetchData, ...props}) {
     const formDataObj = Object.fromEntries(formData.entries());
     console.log(formDataObj);
     formDataObj.amount = Number(formDataObj.amount);
-    const req = await axios(`${url}/transaction`,  {
+    const req = await axios(`${url}/income`,  {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

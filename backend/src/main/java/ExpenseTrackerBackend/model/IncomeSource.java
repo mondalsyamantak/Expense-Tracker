@@ -1,18 +1,15 @@
 package ExpenseTrackerBackend.model;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
-@Component
-@Scope("prototype")
 @Embeddable
 public class IncomeSource {
     @Getter
@@ -25,7 +22,10 @@ public class IncomeSource {
     private String incomeName;
 
     @Getter @Setter
-    private Date date;
+    private LocalDate date;
+
+    @Getter @Setter
+    private LocalDate updateDate;
 
     @Getter
     @Setter
@@ -36,7 +36,9 @@ public class IncomeSource {
     private String description;
 
     public IncomeSource() {
-        this.incomeID = UUID.randomUUID().toString(); // generate unique ID
+        this.incomeID = UUID.randomUUID().toString();
+        this.date = LocalDate.now();
+        this.updateDate = LocalDate.now();
     }
 
 }
